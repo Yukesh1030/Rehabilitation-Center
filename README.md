@@ -45,12 +45,11 @@ rehabilitation-center/
 ├── about.html                  # About page (Hero + 8 Sections + Story + Philosophy)
 ├── contact.html                # Contact page (Hero + 8 Sections + Branch Offices + Form)
 ├── appointments.html           # Assessment & Booking Wizard (5-Step prototype + Demos)
-├── login.html                  # Login page (Client, Admin, Therapist role routing)
-├── signup.html                 # Signup page (Client, Admin, Therapist registration)
+├── login.html                  # Login page (Client, Admin role routing)
+├── signup.html                 # Signup page (Client, Admin registration)
 ├── 404.html                    # Custom 404 page ("Back" & "Back to Home" with GSAP)
 │
 ├── AdminDashboard.html         # Administrator Portal (Dark theme, 5 menus, 3 KPIs, triage)
-├── TherapistDashboard.html     # Therapist Workspace (5 menus, schedule, SOAP notes)
 ├── PatientDashboard.html       # Patient Portal (5 menus, milestones, resources)
 ├── ClientDashboard.html        # Alias redirect to PatientDashboard.html
 ├── Our Team.html               # Alias redirect to our-team.html
@@ -74,7 +73,6 @@ rehabilitation-center/
 │   ├── validation.js           # Contact inquiry form validation
 │   ├── auth.js                 # Auth validation, password toggles, and role routing
 │   ├── admin-dashboard.js      # Admin KPI refresh and request triage actions
-│   ├── therapist-dashboard.js  # Session completion and SOAP note composer
 │   └── patient-dashboard.js    # Interactive milestone checklist and reminders
 │
 ├── assets/                     # 100% WebP images, strictly 70KB - 90KB
@@ -97,7 +95,6 @@ rehabilitation-center/
 - **Login Page (`login.html`)**:
   - Selecting **"Admin"** redirects to `AdminDashboard.html`
   - Selecting **"Client"** redirects to `PatientDashboard.html`
-  - Selecting **"Therapist"** redirects to `TherapistDashboard.html`
 - **Signup Page (`signup.html`)**:
   - Validates full name, email format, and password length (min 6 characters), then redirects to `login.html`.
 

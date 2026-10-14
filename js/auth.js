@@ -124,8 +124,6 @@ function initLoginForm() {
         setTimeout(() => {
           if (roleVal === 'Admin') {
             window.location.href = 'AdminDashboard.html';
-          } else if (roleVal === 'Therapist') {
-            window.location.href = 'TherapistDashboard.html';
           } else {
             // Client / Patient
             window.location.href = 'PatientDashboard.html';
