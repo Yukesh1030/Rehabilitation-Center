@@ -613,10 +613,10 @@ button, input, select, textarea {
   transform: translateX(4px);
 }
 
-/* Branch Office Cards in Footer */
+/* Branch Office Card in Footer */
 .footer-branch-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1.25rem;
 }
 
@@ -624,7 +624,7 @@ button, input, select, textarea {
   background-color: rgba(244, 243, 236, 0.04);
   border: 1px solid rgba(244, 243, 236, 0.08);
   border-radius: var(--radius-md);
-  padding: 1rem;
+  padding: 1.25rem;
 }
 
 .branch-city-title {
