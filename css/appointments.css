@@ -1,0 +1,226 @@
+/* ==========================================================================
+   STACKLY REHABILITATION - APPOINTMENTS & ASSESSMENT BOOKING
+   ========================================================================== */
+
+.booking-wizard-wrapper {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-bg-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Wizard Steps Indicator */
+.wizard-progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.wizard-progress-track {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background-color: var(--color-bg-border);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.wizard-step-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.step-node-bubble {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-pill);
+  background-color: #FFFFFF;
+  border: 2px solid var(--color-bg-border);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.wizard-step-node.active .step-node-bubble {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(var(--color-primary-rgb), 0.18);
+}
+
+.wizard-step-node.completed .step-node-bubble {
+  background-color: var(--color-primary-tint);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.step-node-label {
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.wizard-step-node.active .step-node-label {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Wizard Step Pane */
+.wizard-step-pane {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.wizard-step-pane.is-active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Program & Therapist Selector Grids */
+.selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.selection-card {
+  border: 2px solid var(--color-bg-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background-color: var(--color-bg-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.selection-card:hover {
+  border-color: var(--color-primary-light);
+  transform: translateY(-2px);
+}
+
+.selection-card.is-selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-tint);
+  box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.12);
+}
+
+.selection-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+/* Time Slot Pills */
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.time-slot-pill {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-bg-border);
+  background-color: #FFFFFF;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+}
+
+.time-slot-pill:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-tint);
+}
+
+.time-slot-pill.is-selected {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
+}
+
+/* Booking Review Summary */
+.booking-summary-card {
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-bg-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed var(--color-bg-border);
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-label {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.summary-value {
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-align: right;
+}
+
+/* Confirmation Card */
+.confirmation-card {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+}
+
+.confirmation-badge-icon {
+  width: 72px;
+  height: 72px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(40, 91, 80, 0.25);
+}
+
+.wizard-footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-bg-border);
+}

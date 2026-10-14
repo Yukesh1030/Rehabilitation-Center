@@ -1,0 +1,252 @@
+/* ==========================================================================
+   STACKLY REHABILITATION - RESPONSIVE STYLES
+   Breakpoints explicitly targeted:
+   - 1920px (Ultra-wide desktop)
+   - 1440px (Standard wide desktop)
+   - 1280px (Laptops / standard desktop)
+   - 1024px (Tablets landscape / small desktop)
+   - 768px  (Tablets portrait)
+   - 414px  (Large mobile devices - iPhone Plus/Pro Max)
+   - 390px  (Standard modern mobile - iPhone 12/13/14/15)
+   - 375px  (Compact mobile - iPhone SE / standard Android)
+   ========================================================================== */
+
+/* 1920px & Beyond: Ultra-wide Monitors */
+@media (min-width: 1920px) {
+  :root {
+    --container-max: 1560px;
+  }
+
+  body {
+    font-size: 17px;
+  }
+
+  .container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* 1440px to 1919px: Desktop Standard */
+@media (max-width: 1919px) and (min-width: 1440px) {
+  :root {
+    --container-max: 1360px;
+  }
+}
+
+/* 1280px to 1439px: Compact Desktop / Laptops */
+@media (max-width: 1439px) and (min-width: 1025px) {
+  :root {
+    --container-max: 1200px;
+  }
+}
+
+/* 1024px & Below: Small Desktop & Tablet Landscape */
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 76px;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+  }
+}
+
+/* 768px & Below: Tablets Portrait & Mobile Breakpoint */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 70px;
+  }
+
+  /* Hamburger Menu Activation */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .nav-menu-wrapper {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: min(85vw, 360px);
+    height: 100vh;
+    height: 100dvh;
+    background-color: var(--color-bg);
+    box-shadow: -8px 0 32px rgba(20, 48, 42, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: calc(var(--header-height) + 1.5rem) 2rem 2.5rem 2rem;
+    transition: right var(--transition-normal);
+    z-index: 1001;
+    overflow-y: auto;
+  }
+
+  .nav-menu-wrapper.is-open {
+    right: 0;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 1.25rem;
+  }
+
+  .nav-link {
+    font-size: 1.15rem;
+    padding: 0.5rem 0;
+    width: 100%;
+    border-bottom: 1px solid var(--color-bg-border);
+  }
+
+  .nav-mobile-actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .nav-mobile-actions .btn {
+    width: 100%;
+  }
+
+  .nav-actions .btn-nav-login {
+    display: none; /* Handled inside mobile drawer */
+  }
+
+  /* Footer on Tablets */
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-branch-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.25rem;
+  }
+
+  .footer-bottom-links {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Common Layout Adjustments */
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .btn {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .btn-lg {
+    padding: 0.9rem 1.85rem;
+    font-size: 1rem;
+  }
+}
+
+/* 414px: Large Mobile (iPhone Plus / Pro Max) */
+@media (max-width: 414px) {
+  :root {
+    --header-height: 64px;
+  }
+
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .brand-logo-img {
+    height: 38px;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .card {
+    padding: 1.35rem;
+    border-radius: var(--radius-md);
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .hero-actions-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.85rem !important;
+  }
+}
+
+/* 390px: Standard Mobile (iPhone 12/13/14/15) */
+@media (max-width: 390px) {
+  .section {
+    padding: 3.25rem 0;
+  }
+
+  .section-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.85rem;
+  }
+
+  .nav-menu-wrapper {
+    width: 88vw;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* 375px: Compact Mobile (iPhone SE / Small Viewports) */
+@media (max-width: 375px) {
+  :root {
+    --header-height: 60px;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  h1 {
+    font-size: 2.15rem;
+  }
+
+  h2 {
+    font-size: 1.85rem;
+  }
+
+  .brand-logo-img {
+    height: 34px;
+  }
+
+  .card {
+    padding: 1.15rem;
+  }
+
+  .footer-col-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* Utility to explicitly prevent horizontal overflow everywhere */
+.no-overflow {
+  overflow-x: hidden !important;
+  width: 100%;
+}

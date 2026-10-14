@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about STACKLY Rehabilitation: Our founding story, mission, multidisciplinary therapy philosophy, and barrier-free facilities.">
+  <title>About Us | STACKLY Rehabilitation</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/Brand-logo.webp">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="no-overflow">
+
+  <!-- Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-logo-link" id="brand-logo-link" aria-label="STACKLY Rehabilitation Homepage">
+        <img src="assets/Brand-logo.webp" alt="STACKLY Rehabilitation Logo" class="brand-logo-img">
+      </a>
+
+      <nav class="nav-menu-wrapper" id="nav-menu" aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link" id="nav-home">Home</a></li>
+          <li><a href="programs.html" class="nav-link" id="nav-programs">Programs</a></li>
+          <li><a href="our-team.html" class="nav-link" id="nav-team">Our Team</a></li>
+          <li><a href="about.html" class="nav-link active" id="nav-about">About</a></li>
+          <li><a href="contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-mobile-actions" style="display:none;">
+          <a href="login.html" class="btn btn-outline" id="mobile-nav-login">
+            <i class="fa-regular fa-user"></i> Login
+          </a>
+          <a href="appointments.html" class="btn btn-primary" id="mobile-nav-book">
+            <i class="fa-regular fa-calendar-check"></i> Book Assessment
+          </a>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-primary btn-nav-login" id="nav-login-btn">
+          <i class="fa-regular fa-user"></i> Login
+        </a>
+
+        <button type="button" class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ==========================================================================
+         SECTION 1: ABOUT HERO
+         Helping People Move Toward Greater Independence.
+         Animated center aligned contents with cover image
+         ========================================================================== -->
+    <section class="section hero-section" style="padding: clamp(3.5rem, 7vw, 5.5rem) 0; background: linear-gradient(180deg, rgba(40, 91, 80, 0.08) 0%, rgba(244, 243, 236, 1) 100%);">
+      <div class="container" style="text-align: center; max-width: 860px;">
+        <span class="section-badge animate-fade-up">
+          <i class="fa-solid fa-heart-pulse"></i> Our Core Purpose
+        </span>
+
+        <h1 class="hero-title animate-fade-up" style="margin-bottom: 1.25rem;">
+          Helping People Move Toward Greater Independence.
+        </h1>
+
+        <p class="lead animate-fade-up" style="margin-bottom: 2rem; max-width: 680px; margin-left: auto; margin-right: auto;">
+          Founded on principles of clinical rigor and heartfelt empathy, STACKLY Rehabilitation provides a reassuring, dignified sanctuary where patients rediscover physical confidence and self-sufficiency.
+        </p>
+
+        <!-- Cover Image -->
+        <div class="hero-image-frame clip-reveal animate-fade-up" style="border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); max-height: 400px; margin: 0 auto;">
+          <img src="assets/Peace Env.webp" alt="Therapeutic calm environment at STACKLY Rehabilitation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 2: OUR STORY
+         ========================================================================== -->
+    <section class="section" id="story-section">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center;">
+          <div class="animate-fade-up">
+            <span class="section-badge">Section 02 • Founding Journey</span>
+            <h2 class="section-title">Built From a Vision of Restorative Dignity</h2>
+            <p class="lead">
+              A decade ago, our clinical founders recognized a critical void in conventional recovery care: the gap between acute hospital discharge and real-world independence.
+            </p>
+            <p style="color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
+              Patients were often discharged from hospitals with minimal home guidance, while traditional outpatient gyms felt sterile, rushed, or intimidating. STACKLY Rehabilitation was created to bridge this divide. We built warm, accessible clinics staffed with interdisciplinary clinicians who have the time and specialized equipment to walk every step of recovery with you.
+            </p>
+            <div style="display: flex; gap: 2rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-bg-border);">
+              <div>
+                <strong style="font-size: 1.5rem; color: var(--color-primary); display: block;">10+ Years</strong>
+                <span style="font-size: 0.85rem; color: var(--color-text-muted);">Dedicated Clinical Service</span>
+              </div>
+              <div>
+                <strong style="font-size: 1.5rem; color: var(--color-primary); display: block;">4 Branches</strong>
+                <span style="font-size: 0.85rem; color: var(--color-text-muted);">Serving South India</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="animate-fade-up">
+            <div style="border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 4/3;">
+              <img src="assets/Why Choose Us.webp" alt="Therapy team collaborating in clinic reception" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 3: MISSION AND VISION
+         ========================================================================== -->
+    <section class="section section-bg-alt" id="mission-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Section 03 • Guiding Principles</span>
+          <h2 class="section-title">Mission & Clinical Vision</h2>
+          <p class="section-subtitle">
+            The fundamental commitments that guide our daily interactions, clinical choices, and patient partnerships.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <div class="card animate-fade-up" style="background: #FFFFFF;">
+            <div class="journey-node-icon" style="margin-bottom: 1.25rem;"><i class="fa-solid fa-bullseye"></i></div>
+            <h3 style="font-size: 1.45rem; margin-bottom: 0.75rem;">Our Mission</h3>
+            <p style="color: var(--color-text-secondary); line-height: 1.7; font-size: 0.95rem;">
+              To provide evidence-informed, interdisciplinary rehabilitation care that empowers individuals recovering from neurological conditions, traumatic injuries, or surgical procedures to achieve their highest possible level of physical autonomy, emotional dignity, and community participation.
+            </p>
+          </div>
+
+          <div class="card animate-fade-up" style="background: #FFFFFF;">
+            <div class="journey-node-icon" style="margin-bottom: 1.25rem;"><i class="fa-solid fa-eye"></i></div>
+            <h3 style="font-size: 1.45rem; margin-bottom: 0.75rem;">Our Vision</h3>
+            <p style="color: var(--color-text-secondary); line-height: 1.7; font-size: 0.95rem;">
+              To be the benchmark center of restorative physical and neuro-rehabilitation excellence, setting standard practices for barrier-free clinical accessibility, patient-directed goal pacing, and comprehensive caregiver integration across the region.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 4: REHABILITATION PHILOSOPHY
+         ========================================================================== -->
+    <section class="section" id="philosophy-section">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center;">
+          <div class="animate-fade-up">
+            <div style="border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 1/1;">
+              <img src="assets/Personalized Care.webp" alt="Demonstration of gentle progressive rehabilitation philosophy" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+            </div>
+          </div>
+
+          <div class="animate-fade-up">
+            <span class="section-badge">Section 04 • How We Think</span>
+            <h2 class="section-title">The STACKLY Rehabilitation Philosophy</h2>
+            <p class="lead">
+              Restoration is not an overnight breakthrough—it is an accumulation of deliberate, coordinated steps.
+            </p>
+            <p style="color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
+              We reject the archaic "no pain, no gain" philosophy. In modern restorative science, excessive pain triggers protective guarding and inflammatory stalls. Instead, we emphasize neuroplastic adaptation: focused repetition within a safe physiological envelope, progressive overload, and celebrating real functional victories.
+            </p>
+            <ul class="program-feature-checklist">
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Respect for Tissue Biology:</strong> Therapy aligned with cellular healing timelines.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Whole-Person Wellness:</strong> Acknowledging sleep, nutrition, and cognitive fatigue.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Transparent Communication:</strong> Setting realistic milestones without clinical ambiguity.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 5: OUR MULTIDISCIPLINARY TEAM
+         ========================================================================== -->
+    <section class="section section-bg-alt" id="team-overview-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Section 05 • Integrated Care</span>
+          <h2 class="section-title">Our Multidisciplinary Team</h2>
+          <p class="section-subtitle">
+            True recovery occurs when multiple specialists view your mobility through their unique clinical lenses and unite their findings.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.75rem;">
+          <div class="card animate-fade-up" style="background: #FFFFFF;">
+            <div class="journey-node-icon" style="margin-bottom: 1rem;"><i class="fa-solid fa-person-walking"></i></div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Physical Therapists (PT)</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              Focus on gait mechanics, gross motor strength, joint mobility, vestibular balance, and post-operative orthopedic recovery.
+            </p>
+          </div>
+
+          <div class="card animate-fade-up" style="background: #FFFFFF;">
+            <div class="journey-node-icon" style="margin-bottom: 1rem;"><i class="fa-solid fa-hand-holding-heart"></i></div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Occupational Therapists (OT)</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              Specialize in fine motor control, dexterity, adaptive kitchen/home equipment, and ergonomic return-to-work routines.
+            </p>
+          </div>
+
+          <div class="card animate-fade-up" style="background: #FFFFFF;">
+            <div class="journey-node-icon" style="margin-bottom: 1rem;"><i class="fa-solid fa-comments"></i></div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Speech Pathologists (SLP)</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              Target vocal expression, cognitive task sequencing, aphasia recovery, and diagnostic dysphagia swallowing safety.
+            </p>
+          </div>
+
+          <div class="card animate-fade-up" style="background: #FFFFFF;">
+            <div class="journey-node-icon" style="margin-bottom: 1rem;"><i class="fa-solid fa-clipboard-user"></i></div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Clinical Coordinators</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              Liaise with your external physicians, assist with insurance claims, coordinate schedule logistics, and support family communication.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 6: FACILITIES AND ACCESSIBILITY
+         ========================================================================== -->
+    <section class="section" id="accessibility-section">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center;">
+          <div class="animate-fade-up">
+            <span class="section-badge">Section 06 • Universal Access</span>
+            <h2 class="section-title">Zero-Barrier Accessible Facilities</h2>
+            <p class="lead">
+              Every detail in our centers has been engineered to eliminate physical strain and sensory distress.
+            </p>
+            <p style="color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+              From zero-threshold entry doors and extra-wide mobility corridors to specialized anti-slip shock-absorbing therapy flooring and gentle non-glare daylighting, our centers welcome wheelchairs, walkers, and individuals with sensory sensitivities with total ease.
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.9rem; color:var(--color-primary-dark); font-weight:500;">
+                <i class="fa-solid fa-check" style="color:var(--color-primary);"></i> Step-Free Access
+              </div>
+              <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.9rem; color:var(--color-primary-dark); font-weight:500;">
+                <i class="fa-solid fa-check" style="color:var(--color-primary);"></i> Wide Elevators
+              </div>
+              <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.9rem; color:var(--color-primary-dark); font-weight:500;">
+                <i class="fa-solid fa-check" style="color:var(--color-primary);"></i> Accessible Restrooms
+              </div>
+              <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.9rem; color:var(--color-primary-dark); font-weight:500;">
+                <i class="fa-solid fa-check" style="color:var(--color-primary);"></i> Dedicated Van Parking
+              </div>
+            </div>
+          </div>
+
+          <div class="animate-fade-up">
+            <div style="border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 4/3;">
+              <img src="assets/Gym.webp" alt="Spacious barrier-free rehabilitation gym layout" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 7: COMMUNITY AND CAREGIVER SUPPORT
+         ========================================================================== -->
+    <section class="section section-bg-alt" id="community-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Section 07 • Beyond the Clinic</span>
+          <h2 class="section-title">Community & Caregiver Education</h2>
+          <p class="section-subtitle">
+            Providing practical tools, emotional camaraderie, and educational seminars for families sustaining the recovery journey.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+          <div class="card animate-fade-up" style="background: #FFFFFF;">
+            <span class="badge-tag">Monthly Workshops</span>
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Safe Home Transfer Seminars</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              Hands-on training taught by our occupational therapists on preventing caregiver back strain during wheelchair-to-bed and car transfers.
+            </p>
+          </div>
+
+          <div class="card animate-fade-up" style="background: #FFFFFF;">
+            <span class="badge-tag">Peer Connections</span>
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Caregiver Wellness Circles</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              Facilitated discussion circles providing emotional respite, burnout coping mechanisms, and shared wisdom between family members.
+            </p>
+          </div>
+
+          <div class="card animate-fade-up" style="background: #FFFFFF;">
+            <span class="badge-tag">Public Health</span>
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Free Fall-Prevention Screenings</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              Quarterly community health outreach events offering seniors balance check-ups and home safety checklist evaluations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 8: FINAL CTA
+         ========================================================================== -->
+    <section class="section" id="about-cta-section">
+      <div class="container">
+        <div style="background-color: var(--color-bg-card); border: 2px solid rgba(var(--color-primary-rgb), 0.15); border-radius: var(--radius-xl); padding: clamp(2.5rem, 6vw, 4rem); box-shadow: var(--shadow-lg); text-align: center; max-width: 860px; margin: 0 auto;">
+          <span class="section-badge">Section 08 • Connect With Us</span>
+          <h2 style="font-size: clamp(2rem, 3.5vw, 3rem); color: var(--color-primary-dark); margin-bottom: 1rem;">
+            Experience Reassuring Care Firsthand
+          </h2>
+          <p class="lead" style="max-width: 600px; margin: 0 auto 2.25rem auto;">
+            Tour our facilities, meet our lead specialists, and discuss how we can tailor a rehabilitation plan around your family's needs.
+          </p>
+
+          <div style="display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;">
+            <a href="appointments.html" class="btn btn-primary btn-lg" id="about-cta-book">
+              <i class="fa-regular fa-calendar-check"></i> Book an Assessment
+            </a>
+            <a href="contact.html" class="btn btn-outline btn-lg" id="about-cta-contact">
+              <i class="fa-regular fa-envelope"></i> Contact Our Center
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer with Branch Offices & Links -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" aria-label="STACKLY Home">
+            <img src="assets/Brand-logo.webp" alt="STACKLY Rehabilitation Logo" class="brand-logo-img">
+          </a>
+          <p class="footer-desc">
+            STACKLY Rehabilitation is dedicated to providing clinical excellence, personal autonomy, and compassionate care throughout every recovery milestone.
+          </p>
+          <div class="footer-social-links">
+            <a href="404.html" class="social-icon-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links-list">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+            <li><a href="programs.html"><i class="fa-solid fa-angle-right"></i> Rehabilitation Programs</a></li>
+            <li><a href="our-team.html"><i class="fa-solid fa-angle-right"></i> Our Specialists</a></li>
+            <li><a href="about.html"><i class="fa-solid fa-angle-right"></i> About STACKLY</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+            <li><a href="appointments.html"><i class="fa-solid fa-angle-right"></i> Book Assessment</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Specialized Care</h4>
+          <ul class="footer-links-list">
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Stroke Recovery Protocol</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Spinal Injury Rehabilitation</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Cognitive Speech Retraining</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Post-Surgical Joint Mobility</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Pediatric Motor Skills</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Geriatric Balance Training</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Branch Offices</h4>
+          <div class="footer-branch-grid">
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Bengaluru Branch Office</h5>
+              <p class="branch-address">
+                Evolve Studio, 4th Floor, Khata No 10, Begur – Koppa Rd, in front of SNN Raj Serenity, Suraksha Nagar, Yelenahalli, Begur, Bengaluru, Karnataka – 560068
+              </p>
+            </div>
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Hyderabad Branch Office</h5>
+              <p class="branch-address">
+                STACKLY, 4th floor, Jayasudha heights, Plot no 459, 100 feet road, Ayyappa society, Madhapur, Beside YSR statue, Hyderabad, Telangana – 500081
+              </p>
+            </div>
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Chennai Branch Office</h5>
+              <p class="branch-address">
+                No.9, Ambika Complex, 1st Floor, Gokulam Colony, Karanaipudhuchery main road, Urapakkam, Chennai, Tamil Nadu, India – 603202
+              </p>
+            </div>
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Coimbatore Branch Office</h5>
+              <p class="branch-address">
+                Stackly, 79 Aiswarya Complex, Nethaji Road, PN Palayam, Coimbatore, Tamil Nadu, India – 641037
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <span class="current-year">2026</span> STACKLY Rehabilitation. All rights reserved. Every step forward matters.
+        </div>
+        <div class="footer-bottom-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Patient Rights</a>
+          <a href="404.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/animations.js"></script>
+</body>
+</html>

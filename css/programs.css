@@ -1,0 +1,104 @@
+/* ==========================================================================
+   STACKLY REHABILITATION - PROGRAMS PAGE STYLES
+   ========================================================================== */
+
+.program-detail-section {
+  padding: clamp(3rem, 6vw, 5.5rem) 0;
+  border-bottom: 1px solid var(--color-bg-border);
+}
+
+.program-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.program-detail-grid.reverse {
+  direction: rtl;
+}
+
+.program-detail-grid.reverse > * {
+  direction: ltr;
+}
+
+.program-content-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.program-media-frame {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  aspect-ratio: 4 / 3;
+}
+
+.program-media-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.program-media-frame:hover img {
+  transform: scale(1.04);
+}
+
+.program-conditions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.condition-pill {
+  background-color: var(--color-primary-tint);
+  color: var(--color-primary-dark);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.15);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.825rem;
+  font-weight: 500;
+}
+
+.program-feature-checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.program-feature-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+
+.program-feature-checklist i {
+  color: var(--color-primary);
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.program-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  .program-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  
+  .program-detail-grid.reverse {
+    direction: ltr;
+  }
+}

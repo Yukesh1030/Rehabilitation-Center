@@ -1,0 +1,179 @@
+/* ==========================================================================
+   STACKLY REHABILITATION - SIGNATURE ANIMATIONS & GSAP PREP
+   ========================================================================== */
+
+/* Hero Text Masking & Reveals */
+.reveal-text-wrap {
+  overflow: hidden;
+  display: block;
+}
+
+.reveal-text {
+  display: block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+}
+
+.reveal-text.is-revealed {
+  transform: translateY(0%);
+  opacity: 1;
+}
+
+/* Hero Image Clip Path Reveal */
+.clip-reveal {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+  transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clip-reveal.is-revealed {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Stagger Item Entrance */
+.animate-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.animate-fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Recovery Journey Progress Line */
+.journey-timeline {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.journey-progress-track {
+  position: absolute;
+  top: 40px;
+  left: 24px;
+  bottom: 40px;
+  width: 4px;
+  background-color: var(--color-bg-border);
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.journey-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  border-radius: 4px;
+  transition: height 0.3s ease-out;
+}
+
+@media (min-width: 900px) {
+  .journey-timeline-horizontal {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    position: relative;
+    padding-top: 3rem;
+  }
+
+  .journey-progress-track-h {
+    position: absolute;
+    top: 40px;
+    left: 10%;
+    right: 10%;
+    height: 4px;
+    background-color: var(--color-bg-border);
+    border-radius: 4px;
+    z-index: 1;
+  }
+
+  .journey-progress-fill-h {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    border-radius: 4px;
+    transition: width 0.4s ease-out;
+  }
+}
+
+/* Step Node Badge */
+.journey-node-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-pill);
+  background-color: #FFFFFF;
+  border: 3px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 1.1rem;
+  z-index: 2;
+  position: relative;
+  transition: all var(--transition-normal);
+  box-shadow: 0 4px 12px rgba(40, 91, 80, 0.15);
+}
+
+.journey-step-card:hover .journey-node-icon,
+.journey-step-card.active .journey-node-icon {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-accent);
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(40, 91, 80, 0.25);
+}
+
+/* Floating animation for 404 & decorative elements */
+@keyframes softFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+.animate-float {
+  animation: softFloat 4.5s ease-in-out infinite;
+}
+
+/* Pulse Glow */
+@keyframes subtlePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(40, 91, 80, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(40, 91, 80, 0);
+  }
+}
+
+.pulse-glow {
+  animation: subtlePulse 3s infinite;
+}
+
+/* Reduced Motion Override for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-text, .animate-fade-up {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .clip-reveal {
+    clip-path: none !important;
+  }
+}

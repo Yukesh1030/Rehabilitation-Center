@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meet our multidisciplinary rehabilitation team - Licensed physical therapists, occupational therapists, and speech-language pathologists.">
+  <title>Our Specialists | STACKLY Rehabilitation</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/Brand-logo.webp">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/team.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="no-overflow">
+
+  <!-- Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-logo-link" id="brand-logo-link" aria-label="STACKLY Rehabilitation Homepage">
+        <img src="assets/Brand-logo.webp" alt="STACKLY Rehabilitation Logo" class="brand-logo-img">
+      </a>
+
+      <nav class="nav-menu-wrapper" id="nav-menu" aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link" id="nav-home">Home</a></li>
+          <li><a href="programs.html" class="nav-link" id="nav-programs">Programs</a></li>
+          <li><a href="our-team.html" class="nav-link active" id="nav-team">Our Team</a></li>
+          <li><a href="about.html" class="nav-link" id="nav-about">About</a></li>
+          <li><a href="contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-mobile-actions" style="display:none;">
+          <a href="login.html" class="btn btn-outline" id="mobile-nav-login">
+            <i class="fa-regular fa-user"></i> Login
+          </a>
+          <a href="appointments.html" class="btn btn-primary" id="mobile-nav-book">
+            <i class="fa-regular fa-calendar-check"></i> Book Assessment
+          </a>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-primary btn-nav-login" id="nav-login-btn">
+          <i class="fa-regular fa-user"></i> Login
+        </a>
+
+        <button type="button" class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ==========================================================================
+         SECTION 1: TEAM HERO
+         Care Guided by Experience and Compassion.
+         Animated center aligned contents
+         ========================================================================== -->
+    <section class="section hero-section" style="padding: clamp(3.5rem, 7vw, 5.5rem) 0; background: linear-gradient(180deg, rgba(40, 91, 80, 0.08) 0%, rgba(244, 243, 236, 1) 100%);">
+      <div class="container" style="text-align: center; max-width: 860px;">
+        <span class="section-badge animate-fade-up">
+          <i class="fa-solid fa-user-doctor"></i> Multidisciplinary Faculty
+        </span>
+
+        <h1 class="hero-title animate-fade-up" style="margin-bottom: 1.25rem;">
+          Care Guided by Experience and Compassion.
+        </h1>
+
+        <p class="lead animate-fade-up" style="margin-bottom: 2rem; max-width: 680px; margin-left: auto; margin-right: auto;">
+          Our licensed physical therapists, occupational specialists, and speech pathologists bring hospital-grade expertise, dedicated one-on-one time, and genuine empathy to every recovery milestone.
+        </p>
+
+        <!-- Cover Image -->
+        <div class="hero-image-frame clip-reveal animate-fade-up" style="border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); max-height: 400px; margin: 0 auto;">
+          <img src="assets/Hospitality.webp" alt="Therapy and clinician consulting team in multidisciplinary meeting" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 3: THERAPIST SEARCH AND FILTERS (Placed above directory for UX)
+         ========================================================================== -->
+    <section class="section" style="padding-bottom: 0;" id="search-filter-section">
+      <div class="container">
+        <div class="team-filter-bar">
+          <div class="team-search-box">
+            <i class="fa-solid fa-magnifying-glass team-search-icon"></i>
+            <input type="text" id="therapist-search-input" class="team-search-input" placeholder="Search specialists by name, specialty, or condition..." aria-label="Search specialists">
+          </div>
+
+          <div class="filter-pills-group" role="tablist" aria-label="Specialty Filter Tabs">
+            <button type="button" class="filter-pill active" data-filter="all">All Specialties</button>
+            <button type="button" class="filter-pill" data-filter="neurological">Neurological</button>
+            <button type="button" class="filter-pill" data-filter="physical">Physical Therapy</button>
+            <button type="button" class="filter-pill" data-filter="occupational">Occupational</button>
+            <button type="button" class="filter-pill" data-filter="speech">Speech & Language</button>
+            <button type="button" class="filter-pill" data-filter="sports">Sports Medicine</button>
+          </div>
+
+          <div style="text-align: center; font-size: 0.875rem; color: var(--color-text-muted);" id="team-results-count">
+            Showing 4 Specialists
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 2: MEET OUR SPECIALISTS DIRECTORY
+         ========================================================================== -->
+    <section class="section" id="specialists-directory-section" style="padding-top: 1.5rem;">
+      <div class="container">
+        <div class="specialists-grid" id="specialists-container">
+          <!-- Specialist 1 -->
+          <div class="specialist-card" data-name="Dr. Sarah Jenkins" data-specialty="Neurological Physical" data-bio="stroke recovery vestibular vestibular rehabilitation balance brain injury">
+            <div class="specialist-avatar-wrap">
+              <img src="assets/Femal Specialists.webp" alt="Dr. Sarah Jenkins - Lead Neurological Specialist" loading="lazy">
+            </div>
+            <div class="specialist-body">
+              <h3 class="specialist-title">Dr. Sarah Jenkins</h3>
+              <div class="specialist-credentials">PT, DPT, NCS • Lead Neurological Specialist</div>
+              <p class="specialist-bio">
+                Doctorate in Physical Therapy from Northwestern University. 14+ years advancing stroke recovery protocols, balance disorders, and vestibular rehabilitation.
+              </p>
+              <div class="specialist-footer">
+                <span class="specialist-experience">14 Yrs Clinical Exp.</span>
+                <a href="appointments.html?therapist=sarah-jenkins" class="btn btn-sm btn-primary">Book Consultation</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Specialist 2 -->
+          <div class="specialist-card" data-name="Dr. Michael Chen" data-specialty="Occupational Physical" data-bio="occupational daily living fine motor assistive technology adaptive upper extremity">
+            <div class="specialist-avatar-wrap">
+              <img src="assets/therapist-michael.webp" alt="Dr. Michael Chen - Senior Occupational Therapist" loading="lazy">
+            </div>
+            <div class="specialist-body">
+              <h3 class="specialist-title">Dr. Michael Chen</h3>
+              <div class="specialist-credentials">OTD, OTR/L, CHT • Senior Occupational Therapist</div>
+              <p class="specialist-bio">
+                Certified Hand Therapist specializing in fine motor reconstruction, ergonomic adaptations, activities of daily living (ADL), and assistive technology integration.
+              </p>
+              <div class="specialist-footer">
+                <span class="specialist-experience">11 Yrs Clinical Exp.</span>
+                <a href="appointments.html?therapist=michael-chen" class="btn btn-sm btn-primary">Book Consultation</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Specialist 3 -->
+          <div class="specialist-card" data-name="Elena Rostova" data-specialty="Speech Cognitive" data-bio="speech language aphasia swallowing dysphagia cognitive voice communication">
+            <div class="specialist-avatar-wrap">
+              <img src="assets/therapist-elena.webp" alt="Elena Rostova - Lead Speech Pathologist" loading="lazy">
+            </div>
+            <div class="specialist-body">
+              <h3 class="specialist-title">Elena Rostova</h3>
+              <div class="specialist-credentials">MS, CCC-SLP • Lead Speech Pathologist</div>
+              <p class="specialist-bio">
+                Specializes in adult neurogenic communication disorders, post-stroke aphasia, voice dynamics, and dysphagia (swallowing mechanics) diagnostics.
+              </p>
+              <div class="specialist-footer">
+                <span class="specialist-experience">9 Yrs Clinical Exp.</span>
+                <a href="appointments.html?therapist=elena-rostova" class="btn btn-sm btn-primary">Book Consultation</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Specialist 4 -->
+          <div class="specialist-card" data-name="Dr. David Vance" data-specialty="Sports Physical" data-bio="sports injury acl knee shoulder return to sport athletic biomechanics">
+            <div class="specialist-avatar-wrap">
+              <img src="assets/therapist-david.webp" alt="Dr. David Vance - Sports Injury Specialist" loading="lazy">
+            </div>
+            <div class="specialist-body">
+              <h3 class="specialist-title">Dr. David Vance</h3>
+              <div class="specialist-credentials">PT, DPT, OCS, CSCS • Sports Specialist</div>
+              <p class="specialist-bio">
+                Board-Certified Clinical Specialist in Orthopedic Physical Therapy. Focuses on kinetic chain power restoration, post-surgical ACL reconstruction, and return-to-sport testing.
+              </p>
+              <div class="specialist-footer">
+                <span class="specialist-experience">12 Yrs Clinical Exp.</span>
+                <a href="appointments.html?therapist=david-vance" class="btn btn-sm btn-primary">Book Consultation</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="no-specialists-found" style="display:none; text-align:center; padding: 4rem 1rem;">
+          <i class="fa-solid fa-user-slash" style="font-size: 3rem; color: var(--color-accent); margin-bottom: 1rem;"></i>
+          <h3>No specialists match your criteria</h3>
+          <p style="color: var(--color-text-muted);">Try selecting another specialty tab or clearing your search term.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 4: QUALIFICATIONS AND SPECIALTIES
+         ========================================================================== -->
+    <section class="section section-bg-alt" id="qualifications-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Section 04 • Clinical Rigor</span>
+          <h2 class="section-title">Qualifications & Clinical Standards</h2>
+          <p class="section-subtitle">
+            Every clinician on our roster is fully licensed and adheres to internationally recognized rehabilitation protocols.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.75rem;">
+          <div class="card animate-fade-up">
+            <span class="badge-tag">Academic Excellence</span>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Doctoral & Masters Degrees</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              Our physical therapists hold Doctor of Physical Therapy (DPT) degrees from accredited institutions, supplemented by certified clinical residencies.
+            </p>
+          </div>
+
+          <div class="card animate-fade-up">
+            <span class="badge-tag">Specialty Fellowships</span>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Board Certifications</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              Clinicians hold ABPTS specialty certifications in Neurology (NCS), Orthopedics (OCS), Hand Therapy (CHT), and Speech Pathology (CCC-SLP).
+            </p>
+          </div>
+
+          <div class="card animate-fade-up">
+            <span class="badge-tag">Continuous Learning</span>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Active Scientific Research</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+              We participate in clinical neuroplasticity trials and regular peer-reviewed literature reviews to ensure cutting-edge care techniques.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 5: THERAPY APPROACH
+         ========================================================================== -->
+    <section class="section" id="therapy-approach-section">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center;">
+          <div class="animate-fade-up">
+            <div style="border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 4/3;">
+              <img src="assets/Hospitality2.webp" alt="Therapist discussing compassionate care with patient" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+            </div>
+          </div>
+
+          <div class="animate-fade-up">
+            <span class="section-badge">Section 05 • How We Practice</span>
+            <h2 class="section-title">An Approach Grounded in Empathy</h2>
+            <p class="lead">
+              We understand that rehabilitation is as much emotional and psychological as it is physiological.
+            </p>
+            <p style="color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
+              Our therapists take the time to listen before administering treatment. We pace sessions to your comfort, avoiding unnecessary pain while encouraging healthy neuro-muscular adaptation. You will never feel rushed or treated as a clinical number.
+            </p>
+            <ul class="program-feature-checklist">
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Full 60-Minute 1-on-1 Sessions:</strong> Dedicated clinician attention without overlapping appointments.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Trauma-Informed Practice:</strong> Sensitive pacing for individuals recovering from neurological or physical trauma.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Patient-Directed Milestones:</strong> Your definition of success drives our daily clinical focus.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 6: CARE COORDINATION
+         ========================================================================== -->
+    <section class="section section-bg-alt" id="care-coordination-section">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center;">
+          <div class="animate-fade-up">
+            <span class="section-badge">Section 06 • Interdisciplinary Synergy</span>
+            <h2 class="section-title">Seamless Care Coordination</h2>
+            <p class="lead">
+              Restoring human function requires coordinated communication across clinical disciplines and external medical providers.
+            </p>
+            <p style="color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+              At STACKLY, your PT, OT, and SLP conduct weekly roundtable reviews. When needed, our team corresponds directly with your orthopedic surgeon, neurologist, physiatrist, or primary care doctor to ensure unified medical documentation and post-operative safety.
+            </p>
+            <div style="display: flex; gap: 1.5rem; border-top: 1px solid var(--color-bg-border); padding-top: 1.25rem;">
+              <div>
+                <strong style="font-size: 1.2rem; color: var(--color-primary); display: block;">Unified Charting</strong>
+                <span style="font-size: 0.825rem; color: var(--color-text-muted);">Synchronized clinician documentation</span>
+              </div>
+              <div>
+                <strong style="font-size: 1.2rem; color: var(--color-primary); display: block;">Physician Updates</strong>
+                <span style="font-size: 0.825rem; color: var(--color-text-muted);">Bi-weekly progress notes sent to MD</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="animate-fade-up">
+            <div style="border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 4/3;">
+              <img src="assets/Cover-Image.webp" alt="Therapists reviewing patient chart and rehabilitation pathway" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 7: FREQUENTLY ASKED QUESTIONS
+         ========================================================================== -->
+    <section class="section" id="team-faq-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Section 07 • Therapist Guidance</span>
+          <h2 class="section-title">Specialist Inquiries</h2>
+          <p class="section-subtitle">
+            How therapist assignment, continuity of care, and multidisciplinary consultations operate at our center.
+          </p>
+        </div>
+
+        <div class="faq-accordion">
+          <div class="faq-item">
+            <button type="button" class="faq-header" aria-expanded="false">
+              <span class="faq-question">Will I work with the same therapist for every appointment?</span>
+              <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+            </button>
+            <div class="faq-body">
+              <div class="faq-body-content">
+                Yes. Continuity of care is essential for building trust and tracking incremental neuromuscular improvements. Your primary therapist conducts your initial evaluation and oversees all subsequent guided sessions.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-header" aria-expanded="false">
+              <span class="faq-question">Can I switch therapists if I prefer a different approach?</span>
+              <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+            </button>
+            <div class="faq-body">
+              <div class="faq-body-content">
+                Absolutely. Patient comfort and rapport are paramount. Our clinical coordinator can discreetly and smoothly transition your chart to another specialist without interruption to your program.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-header" aria-expanded="false">
+              <span class="faq-question">How are specialists assigned for multidisciplinary care?</span>
+              <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+            </button>
+            <div class="faq-body">
+              <div class="faq-body-content">
+                During your comprehensive assessment, our lead clinician reviews your diagnostic scans and lifestyle goals, matching you with specialists whose clinical fellowship background directly corresponds to your diagnosed condition.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 8: BOOK AN ASSESSMENT CTA
+         ========================================================================== -->
+    <section class="section section-bg-alt" id="team-cta-section">
+      <div class="container">
+        <div style="background-color: var(--color-bg-card); border: 2px solid rgba(var(--color-primary-rgb), 0.15); border-radius: var(--radius-xl); padding: clamp(2.5rem, 6vw, 4rem); box-shadow: var(--shadow-lg); text-align: center; max-width: 860px; margin: 0 auto;">
+          <span class="section-badge">Section 08 • Schedule Your Consultation</span>
+          <h2 style="font-size: clamp(2rem, 3.5vw, 3rem); color: var(--color-primary-dark); margin-bottom: 1rem;">
+            Consult with Our Specialists
+          </h2>
+          <p class="lead" style="max-width: 600px; margin: 0 auto 2.25rem auto;">
+            Choose your preferred therapist or let our clinical coordinator pair you with the ideal specialist for your diagnostic needs.
+          </p>
+
+          <div style="display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;">
+            <a href="appointments.html" class="btn btn-primary btn-lg" id="team-cta-book">
+              <i class="fa-regular fa-calendar-check"></i> Book With a Specialist
+            </a>
+            <a href="contact.html" class="btn btn-outline btn-lg" id="team-cta-contact">
+              <i class="fa-regular fa-envelope"></i> Ask a Question
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer with Branch Offices & Links -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" aria-label="STACKLY Home">
+            <img src="assets/Brand-logo.webp" alt="STACKLY Rehabilitation Logo" class="brand-logo-img">
+          </a>
+          <p class="footer-desc">
+            STACKLY Rehabilitation is led by licensed clinical therapists dedicated to patient autonomy, compassionate guidance, and modern evidence-informed rehabilitation.
+          </p>
+          <div class="footer-social-links">
+            <a href="404.html" class="social-icon-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links-list">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+            <li><a href="programs.html"><i class="fa-solid fa-angle-right"></i> Rehabilitation Programs</a></li>
+            <li><a href="our-team.html"><i class="fa-solid fa-angle-right"></i> Our Specialists</a></li>
+            <li><a href="about.html"><i class="fa-solid fa-angle-right"></i> About STACKLY</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+            <li><a href="appointments.html"><i class="fa-solid fa-angle-right"></i> Book Assessment</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Specialized Care</h4>
+          <ul class="footer-links-list">
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Stroke Recovery Protocol</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Spinal Injury Rehabilitation</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Cognitive Speech Retraining</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Post-Surgical Joint Mobility</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Pediatric Motor Skills</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Geriatric Balance Training</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Branch Offices</h4>
+          <div class="footer-branch-grid">
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Bengaluru Branch Office</h5>
+              <p class="branch-address">
+                Evolve Studio, 4th Floor, Khata No 10, Begur – Koppa Rd, in front of SNN Raj Serenity, Suraksha Nagar, Yelenahalli, Begur, Bengaluru, Karnataka – 560068
+              </p>
+            </div>
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Hyderabad Branch Office</h5>
+              <p class="branch-address">
+                STACKLY, 4th floor, Jayasudha heights, Plot no 459, 100 feet road, Ayyappa society, Madhapur, Beside YSR statue, Hyderabad, Telangana – 500081
+              </p>
+            </div>
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Chennai Branch Office</h5>
+              <p class="branch-address">
+                No.9, Ambika Complex, 1st Floor, Gokulam Colony, Karanaipudhuchery main road, Urapakkam, Chennai, Tamil Nadu, India – 603202
+              </p>
+            </div>
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Coimbatore Branch Office</h5>
+              <p class="branch-address">
+                Stackly, 79 Aiswarya Complex, Nethaji Road, PN Palayam, Coimbatore, Tamil Nadu, India – 641037
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <span class="current-year">2026</span> STACKLY Rehabilitation. All rights reserved. Every step forward matters.
+        </div>
+        <div class="footer-bottom-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Patient Rights</a>
+          <a href="404.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/programs.js"></script>
+  <script src="js/team.js"></script>
+</body>
+</html>

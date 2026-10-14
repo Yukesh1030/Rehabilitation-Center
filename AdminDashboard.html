@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="STACKLY Rehabilitation Administrator Portal - Clinical operations, schedule metrics, and therapist availability.">
+  <title>Admin Dashboard | STACKLY Rehabilitation</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/Brand-logo.webp">
+
+  <!-- Core & Dashboard CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="dashboard-body no-overflow">
+
+  <!-- Mobile Sidebar Overlay -->
+  <div class="dash-sidebar-overlay"></div>
+
+  <!-- ==========================================================================
+       SIDEBAR: 5 MAIN MENUS
+       1. Dashboard, 2. Patients & Staff, 3. Appointments, 4. Programs & Reports, 5. Settings
+       ========================================================================== -->
+  <aside class="dash-sidebar" id="dash-sidebar" aria-label="Administrator Navigation">
+    <div class="dash-brand-bar">
+      <a href="index.html" aria-label="Go to Homepage">
+        <img src="assets/Brand-logo.webp" alt="STACKLY Logo" class="dash-brand-logo">
+      </a>
+      <span class="dash-role-badge">Admin</span>
+    </div>
+
+    <ul class="dash-nav-menu">
+      <li class="dash-nav-item">
+        <a href="#dashboard" class="active" data-view="view-dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="dash-nav-item">
+        <a href="#patients-staff" data-view="view-patients-staff">
+          <i class="fa-solid fa-users"></i>
+          <span>Patients & Staff</span>
+        </a>
+      </li>
+      <li class="dash-nav-item">
+        <a href="#appointments" data-view="view-appointments">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span>Appointments</span>
+        </a>
+      </li>
+      <li class="dash-nav-item">
+        <a href="#programs-reports" data-view="view-programs-reports">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Programs & Reports</span>
+        </a>
+      </li>
+      <li class="dash-nav-item">
+        <a href="#settings" data-view="view-settings">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- User Profile Bar -->
+    <div class="dash-user-bar">
+      <div class="dash-user-info">
+        <div class="dash-user-avatar">AD</div>
+        <div>
+          <div class="dash-user-name">Dr. R. Alagappan</div>
+          <div class="dash-user-role">Clinical Operations Director</div>
+        </div>
+      </div>
+      <button type="button" class="btn-dash-logout" title="Log Out" aria-label="Log Out">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       MAIN DASHBOARD WORKSPACE
+       ========================================================================== -->
+  <div class="dash-main-area">
+    <!-- Topbar -->
+    <header class="dash-topbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button type="button" class="dash-mobile-toggle" aria-label="Toggle Sidebar Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="dash-page-heading">
+          <span class="dash-page-title">Operations Overview</span>
+          <span class="dash-page-subtitle">Demonstration Clinical Metrics & Live Patient Triage</span>
+        </div>
+      </div>
+
+      <div class="dash-top-actions">
+        <button type="button" class="btn-dash-refresh" id="btn-admin-refresh">
+          <i class="fa-solid fa-arrows-rotate"></i>
+          <span>Refresh</span>
+        </button>
+        <a href="index.html" class="btn btn-sm btn-outline" style="border-color:var(--dash-border); color:var(--dash-text-muted);">
+          <i class="fa-solid fa-house"></i> Public Site
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Views -->
+    <main class="dash-content-body">
+      
+      <!-- ==========================================
+           VIEW 1: DASHBOARD OVERVIEW
+           ========================================== -->
+      <div id="view-dashboard" class="dash-view-section">
+        <!-- 3 KPI Cards -->
+        <div class="kpi-cards-grid">
+          <!-- Card 1: Active Patients -->
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-label">Active Patients</div>
+              <div class="kpi-value kpi-counter" id="kpi-active-patients" data-target="186">186</div>
+              <div class="kpi-trend">
+                <i class="fa-solid fa-arrow-trend-up"></i> +12 this month
+              </div>
+            </div>
+            <div class="kpi-icon-wrap">
+              <i class="fa-solid fa-hospital-user"></i>
+            </div>
+          </div>
+
+          <!-- Card 2: Today's Sessions -->
+          <div class="kpi-card kpi-accent">
+            <div>
+              <div class="kpi-label">Today's Sessions</div>
+              <div class="kpi-value kpi-counter" id="kpi-today-sessions" data-target="32">32</div>
+              <div class="kpi-trend" style="color:var(--dash-accent);">
+                <i class="fa-solid fa-clock"></i> 24 completed • 8 upcoming
+              </div>
+            </div>
+            <div class="kpi-icon-wrap" style="color:var(--dash-accent); background:rgba(213,167,122,0.12);">
+              <i class="fa-solid fa-calendar-day"></i>
+            </div>
+          </div>
+
+          <!-- Card 3: Pending Requests -->
+          <div class="kpi-card kpi-warning">
+            <div>
+              <div class="kpi-label">Pending Requests</div>
+              <div class="kpi-value kpi-counter" id="kpi-pending-requests" data-target="9">9</div>
+              <div class="kpi-trend" style="color:var(--dash-warning);">
+                <i class="fa-solid fa-triangle-exclamation"></i> Action required
+              </div>
+            </div>
+            <div class="kpi-icon-wrap" style="color:var(--dash-warning); background:rgba(232,170,66,0.12);">
+              <i class="fa-solid fa-inbox"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Panels Grid (2-Column) -->
+        <div class="dash-panel-grid">
+          
+          <!-- Panel 1: Recent Appointment Requests -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-user-clock" style="color:var(--dash-accent); margin-right:0.5rem;"></i> Recent Appointment Requests
+              </h3>
+              <span style="font-size: 0.8rem; color: var(--dash-text-muted);">Real-time Triage</span>
+            </div>
+
+            <div class="dash-table-wrapper">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Patient Name</th>
+                    <th>Requested Program</th>
+                    <th>Preferred Slot</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong class="patient-name">Vignesh Raman</strong><br><small style="color:var(--dash-text-dim);">+91 94432-11029</small></td>
+                    <td>Neurological Rehabilitation</td>
+                    <td>Tomorrow, 10:00 AM</td>
+                    <td class="status-col"><span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Pending</span></td>
+                    <td>
+                      <div style="display:flex; gap:0.4rem;">
+                        <button type="button" class="btn btn-sm btn-primary btn-accept-request" title="Confirm Booking"><i class="fa-solid fa-check"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline btn-reschedule-request" style="border-color:var(--dash-border); color:var(--dash-text-muted);" title="Suggest Alternate"><i class="fa-regular fa-clock"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong class="patient-name">Sangeetha K.</strong><br><small style="color:var(--dash-text-dim);">+91 98840-55219</small></td>
+                    <td>Physical Rehabilitation</td>
+                    <td>Tomorrow, 02:30 PM</td>
+                    <td class="status-col"><span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Pending</span></td>
+                    <td>
+                      <div style="display:flex; gap:0.4rem;">
+                        <button type="button" class="btn btn-sm btn-primary btn-accept-request" title="Confirm Booking"><i class="fa-solid fa-check"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline btn-reschedule-request" style="border-color:var(--dash-border); color:var(--dash-text-muted);" title="Suggest Alternate"><i class="fa-regular fa-clock"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong class="patient-name">Karthik S.</strong><br><small style="color:var(--dash-text-dim);">+91 97910-88421</small></td>
+                    <td>Sports Injury (ACL)</td>
+                    <td>Friday, 11:15 AM</td>
+                    <td class="status-col"><span class="status-badge status-scheduled"><i class="fa-solid fa-check"></i> Confirmed</span></td>
+                    <td><span style="font-size:0.8rem; color:var(--dash-text-dim);">Dr. Vance</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Panel 2: Therapist Availability Status -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-user-doctor" style="color:var(--dash-primary); margin-right:0.5rem;"></i> Therapist Availability
+              </h3>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid var(--dash-border-subtle);">
+                <div>
+                  <div style="font-weight: 600; color: var(--dash-text);">Dr. Sarah Jenkins</div>
+                  <div style="font-size: 0.75rem; color: var(--dash-text-muted);">Neurological Specialist</div>
+                </div>
+                <span class="status-badge status-completed"><i class="fa-solid fa-circle" style="font-size:0.5rem;"></i> Available</span>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid var(--dash-border-subtle);">
+                <div>
+                  <div style="font-weight: 600; color: var(--dash-text);">Dr. Michael Chen</div>
+                  <div style="font-size: 0.75rem; color: var(--dash-text-muted);">Occupational Therapy</div>
+                </div>
+                <span class="status-badge status-pending"><i class="fa-solid fa-circle" style="font-size:0.5rem;"></i> In Session</span>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid var(--dash-border-subtle);">
+                <div>
+                  <div style="font-weight: 600; color: var(--dash-text);">Elena Rostova</div>
+                  <div style="font-size: 0.75rem; color: var(--dash-text-muted);">Speech & Language</div>
+                </div>
+                <span class="status-badge status-completed"><i class="fa-solid fa-circle" style="font-size:0.5rem;"></i> Available</span>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <div style="font-weight: 600; color: var(--dash-text);">Dr. David Vance</div>
+                  <div style="font-size: 0.75rem; color: var(--dash-text-muted);">Sports PT</div>
+                </div>
+                <span class="status-badge status-pending"><i class="fa-solid fa-circle" style="font-size:0.5rem;"></i> In Session</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Second Row Panels: Today's Schedule & Announcements -->
+        <div class="dash-panel-grid">
+          
+          <!-- Today's Schedule -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-calendar-day" style="color:var(--dash-primary); margin-right:0.5rem;"></i> Today's Clinical Schedule
+              </h3>
+              <span style="font-size: 0.8rem; color: var(--dash-text-muted);">Bengaluru South Hub</span>
+            </div>
+
+            <div class="dash-table-wrapper">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Patient</th>
+                    <th>Therapist</th>
+                    <th>Room / Suite</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>09:00 AM</strong></td>
+                    <td>Pooja K.</td>
+                    <td>Dr. David Vance</td>
+                    <td>Active Gym A</td>
+                    <td><span class="status-badge status-completed">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>10:30 AM</strong></td>
+                    <td>Anand R.</td>
+                    <td>Dr. Sarah Jenkins</td>
+                    <td>Neuro Suite 2</td>
+                    <td><span class="status-badge status-completed">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>01:30 PM</strong></td>
+                    <td>Deepak M.</td>
+                    <td>Dr. Michael Chen</td>
+                    <td>OT Sensory Lab</td>
+                    <td><span class="status-badge status-completed">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>03:00 PM</strong></td>
+                    <td>Radhika N.</td>
+                    <td>Elena Rostova</td>
+                    <td>Speech Quiet Rm 1</td>
+                    <td><span class="status-badge status-scheduled">Scheduled</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>04:30 PM</strong></td>
+                    <td>Arun V.</td>
+                    <td>Dr. Sarah Jenkins</td>
+                    <td>Mobility Track</td>
+                    <td><span class="status-badge status-scheduled">Scheduled</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Announcements & Program Attendance -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-bullhorn" style="color:var(--dash-accent); margin-right:0.5rem;"></i> Center Announcements
+              </h3>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <div style="background:var(--dash-surface); padding:0.85rem; border-radius:8px; border-left:3px solid var(--dash-primary);">
+                <div style="font-weight:600; font-size:0.9rem; color:var(--dash-text);">New Balance Plate Equipment</div>
+                <p style="font-size:0.8rem; color:var(--dash-text-muted); margin:0.25rem 0 0 0;">
+                  Calibrated in Gym Suite B for all sports and neurological balance screenings starting tomorrow morning.
+                </p>
+              </div>
+
+              <div style="background:var(--dash-surface); padding:0.85rem; border-radius:8px; border-left:3px solid var(--dash-accent);">
+                <div style="font-weight:600; font-size:0.9rem; color:var(--dash-text);">Caregiver Workshop on Saturday</div>
+                <p style="font-size:0.8rem; color:var(--dash-text-muted); margin:0.25rem 0 0 0;">
+                  Coimbatore and Bengaluru branches hosting safe transfer training for 24 registered family members.
+                </p>
+              </div>
+
+              <div style="padding-top: 0.5rem;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:0.35rem; color:var(--dash-text-muted);">
+                  <span>Weekly Program Attendance</span>
+                  <span style="color:var(--dash-primary); font-weight:600;">94.2%</span>
+                </div>
+                <div style="height:6px; background:var(--dash-border); border-radius:4px; overflow:hidden;">
+                  <div style="width:94.2%; height:100%; background:var(--dash-primary);"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 2: PATIENTS & STAFF
+           ========================================== -->
+      <div id="view-patients-staff" class="dash-view-section" style="display:none;">
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">Patient & Clinical Staff Directory</h3>
+          </div>
+          <p style="color:var(--dash-text-muted); font-size:0.9rem;">
+            Role-restricted demonstration clinical roster. Patient health records are safeguarded and strictly protected.
+          </p>
+          <div class="dash-table-wrapper">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Primary Program</th>
+                  <th>Assigned Therapist</th>
+                  <th>Admission Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>PAT-1082</td>
+                  <td>Anand R.</td>
+                  <td>Neurological Rehabilitation</td>
+                  <td>Dr. Sarah Jenkins</td>
+                  <td>12 Jan 2026</td>
+                </tr>
+                <tr>
+                  <td>PAT-1094</td>
+                  <td>Pooja K.</td>
+                  <td>Sports Injury Rehabilitation</td>
+                  <td>Dr. David Vance</td>
+                  <td>04 Feb 2026</td>
+                </tr>
+                <tr>
+                  <td>PAT-1102</td>
+                  <td>Meenakshi V. (Caregiver)</td>
+                  <td>Family Support Program</td>
+                  <td>Dr. Michael Chen</td>
+                  <td>18 Feb 2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 3: APPOINTMENTS
+           ========================================== -->
+      <div id="view-appointments" class="dash-view-section" style="display:none;">
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">All Center Appointments</h3>
+          </div>
+          <p style="color:var(--dash-text-muted); font-size:0.9rem;">
+            Upcoming, completed, and pending triage appointments across all 4 regional clinics.
+          </p>
+          <div class="dash-table-wrapper">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Date & Time</th>
+                  <th>Patient</th>
+                  <th>Specialty</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>STK-849201</td>
+                  <td>Tomorrow, 08:30 AM</td>
+                  <td>Vignesh Raman</td>
+                  <td>Neurological</td>
+                  <td><span class="status-badge status-pending">Pending Triage</span></td>
+                </tr>
+                <tr>
+                  <td>STK-849188</td>
+                  <td>Tomorrow, 10:00 AM</td>
+                  <td>Sangeetha K.</td>
+                  <td>Physical Rehabilitation</td>
+                  <td><span class="status-badge status-scheduled">Confirmed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 4: PROGRAMS & REPORTS
+           ========================================== -->
+      <div id="view-programs-reports" class="dash-view-section" style="display:none;">
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">Program Management & Clinical Utilization</h3>
+          </div>
+          <p style="color:var(--dash-text-muted); font-size:0.9rem;">
+            Aggregated utilization statistics across physical, neurological, occupational, speech, and athletic rehabilitation programs.
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-top:1.5rem;">
+            <div style="background:var(--dash-surface); padding:1.25rem; border-radius:8px;">
+              <div style="font-size:0.8rem; color:var(--dash-text-muted);">Physical Rehab</div>
+              <strong style="font-size:1.5rem; color:var(--dash-primary);">42% Active</strong>
+            </div>
+            <div style="background:var(--dash-surface); padding:1.25rem; border-radius:8px;">
+              <div style="font-size:0.8rem; color:var(--dash-text-muted);">Neuro Rehab</div>
+              <strong style="font-size:1.5rem; color:var(--dash-accent);">28% Active</strong>
+            </div>
+            <div style="background:var(--dash-surface); padding:1.25rem; border-radius:8px;">
+              <div style="font-size:0.8rem; color:var(--dash-text-muted);">Occupational & Speech</div>
+              <strong style="font-size:1.5rem; color:var(--dash-text);">18% Active</strong>
+            </div>
+            <div style="background:var(--dash-surface); padding:1.25rem; border-radius:8px;">
+              <div style="font-size:0.8rem; color:var(--dash-text-muted);">Sports Reconditioning</div>
+              <strong style="font-size:1.5rem; color:var(--dash-primary);">12% Active</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 5: SETTINGS
+           ========================================== -->
+      <div id="view-settings" class="dash-view-section" style="display:none;">
+        <div class="dash-panel" style="max-width:680px;">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">Center Administration Settings</h3>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:1.25rem;">
+            <div>
+              <label class="form-label" style="color:var(--dash-text);">Center Regional Hub</label>
+              <input type="text" class="form-control" value="STACKLY Rehabilitation - South India Regional Cluster" readonly style="background:var(--dash-surface); color:var(--dash-text); border-color:var(--dash-border);">
+            </div>
+            <div>
+              <label class="form-label" style="color:var(--dash-text);">Automated Physician Notification</label>
+              <p style="font-size:0.85rem; color:var(--dash-text-muted);">Transmit bi-weekly clinical progress summaries to referring physiatrists upon patient consent.</p>
+              <button type="button" class="btn btn-sm btn-primary">Enabled</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

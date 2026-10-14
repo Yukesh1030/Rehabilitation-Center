@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Page not found - STACKLY Rehabilitation Center. Let's find your way forward.">
+  <title>404 - Page Not Found | STACKLY Rehabilitation</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/Brand-logo.webp">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  
+  <style>
+    .page-404-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      background: radial-gradient(circle at 50% 40%, rgba(213, 167, 122, 0.12) 0%, rgba(244, 243, 236, 1) 70%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-top-bar {
+      position: absolute;
+      top: 2rem;
+      left: 2.5rem;
+    }
+
+    .brand-top-bar img {
+      height: 42px;
+      width: auto;
+    }
+
+    .error-code-badge {
+      font-size: clamp(6.5rem, 15vw, 12rem);
+      font-family: var(--font-serif);
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+      text-shadow: 0 10px 30px rgba(40, 91, 80, 0.15);
+      position: relative;
+    }
+
+    .compass-orb {
+      width: 90px;
+      height: 90px;
+      border-radius: var(--radius-pill);
+      background-color: var(--color-bg-card);
+      border: 2px dashed var(--color-accent);
+      color: var(--color-accent-dark);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .error-content-box {
+      max-width: 620px;
+      margin: 0 auto;
+      z-index: 2;
+    }
+
+    .error-headline {
+      font-size: clamp(1.8rem, 4vw, 2.75rem);
+      color: var(--color-primary-dark);
+      margin-bottom: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    .error-desc {
+      font-size: 1.15rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .error-actions-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body class="no-overflow">
+
+  <div class="page-404-wrapper">
+    <div class="brand-top-bar">
+      <a href="index.html" aria-label="Go to STACKLY Homepage">
+        <img src="assets/Brand-logo.webp" alt="STACKLY Rehabilitation Logo" class="brand-logo-img">
+      </a>
+    </div>
+
+    <div class="error-content-box">
+      <div class="compass-orb animate-float" id="orb-compass" aria-hidden="true">
+        <i class="fa-solid fa-compass"></i>
+      </div>
+
+      <div class="error-code-badge" id="code-404">404</div>
+
+      <h1 class="error-headline" id="title-404">LET'S FIND YOUR WAY FORWARD.</h1>
+      
+      <p class="error-desc" id="desc-404">
+        This page isn't available, but we're here to help you find the right direction.
+      </p>
+
+      <div class="error-actions-group" id="actions-404">
+        <button type="button" class="btn btn-outline btn-lg" onclick="handleGoBack()" id="btn-404-back">
+          <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+        <a href="index.html" class="btn btn-primary btn-lg" id="btn-404-home">
+          <i class="fa-solid fa-house"></i> Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    function handleGoBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    // GSAP Entrance Animation
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof gsap !== 'undefined') {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        
+        tl.fromTo('#orb-compass', 
+          { scale: 0, rotate: -45, opacity: 0 }, 
+          { scale: 1, rotate: 0, opacity: 1, duration: 0.8 }
+        )
+        .fromTo('#code-404', 
+          { y: 40, opacity: 0 }, 
+          { y: 0, opacity: 1, duration: 0.8 }, 
+          '-=0.4'
+        )
+        .fromTo('#title-404', 
+          { y: 30, opacity: 0 }, 
+          { y: 0, opacity: 1, duration: 0.7 }, 
+          '-=0.5'
+        )
+        .fromTo('#desc-404', 
+          { y: 20, opacity: 0 }, 
+          { y: 0, opacity: 1, duration: 0.6 }, 
+          '-=0.4'
+        )
+        .fromTo('#actions-404 .btn', 
+          { y: 20, opacity: 0 }, 
+          { y: 0, opacity: 1, stagger: 0.15, duration: 0.6 }, 
+          '-=0.3'
+        );
+      }
+    });
+  </script>
+</body>
+</html>

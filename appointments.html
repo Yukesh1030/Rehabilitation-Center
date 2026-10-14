@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Book an assessment at STACKLY Rehabilitation: Multi-step scheduling for physical, neurological, and occupational therapy.">
+  <title>Book an Assessment | STACKLY Rehabilitation</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/Brand-logo.webp">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/appointments.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body class="no-overflow">
+
+  <!-- Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-logo-link" id="brand-logo-link" aria-label="STACKLY Rehabilitation Homepage">
+        <img src="assets/Brand-logo.webp" alt="STACKLY Rehabilitation Logo" class="brand-logo-img">
+      </a>
+
+      <nav class="nav-menu-wrapper" id="nav-menu" aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link" id="nav-home">Home</a></li>
+          <li><a href="programs.html" class="nav-link" id="nav-programs">Programs</a></li>
+          <li><a href="our-team.html" class="nav-link" id="nav-team">Our Team</a></li>
+          <li><a href="about.html" class="nav-link" id="nav-about">About</a></li>
+          <li><a href="contact.html" class="nav-link" id="nav-contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-mobile-actions" style="display:none;">
+          <a href="login.html" class="btn btn-outline" id="mobile-nav-login">
+            <i class="fa-regular fa-user"></i> Login
+          </a>
+          <a href="appointments.html" class="btn btn-primary" id="mobile-nav-book">
+            <i class="fa-regular fa-calendar-check"></i> Book Assessment
+          </a>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-primary btn-nav-login" id="nav-login-btn">
+          <i class="fa-regular fa-user"></i> Login
+        </a>
+
+        <button type="button" class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="section hero-section" style="padding: clamp(3.5rem, 6vw, 5rem) 0 2rem 0; background: linear-gradient(180deg, rgba(40, 91, 80, 0.08) 0%, rgba(244, 243, 236, 1) 100%);">
+      <div class="container" style="text-align: center; max-width: 800px;">
+        <span class="section-badge animate-fade-up">
+          <i class="fa-regular fa-calendar-check"></i> Interactive Patient Scheduling
+        </span>
+        <h1 class="hero-title animate-fade-up" style="margin-bottom: 1rem;">
+          Schedule Your Comprehensive Assessment
+        </h1>
+        <p class="lead animate-fade-up" style="margin-bottom: 1.5rem;">
+          Take the first step toward recovery. Choose your program, select your clinician, and confirm your preferred consultation time.
+        </p>
+      </div>
+    </section>
+
+    <!-- Booking Wizard Container -->
+    <section class="section" style="padding-top: 1.5rem; padding-bottom: 5rem;">
+      <div class="container">
+        
+        <div class="booking-wizard-wrapper">
+          <!-- Step Indicators Progress Bar -->
+          <div class="wizard-progress-bar">
+            <div class="wizard-progress-track"></div>
+            
+            <div class="wizard-step-node active" data-target-step="1">
+              <div class="step-node-bubble">1</div>
+              <span class="step-node-label">Program</span>
+            </div>
+
+            <div class="wizard-step-node" data-target-step="2">
+              <div class="step-node-bubble">2</div>
+              <span class="step-node-label">Specialist</span>
+            </div>
+
+            <div class="wizard-step-node" data-target-step="3">
+              <div class="step-node-bubble">3</div>
+              <span class="step-node-label">Date & Time</span>
+            </div>
+
+            <div class="wizard-step-node" data-target-step="4">
+              <div class="step-node-bubble">4</div>
+              <span class="step-node-label">Your Info</span>
+            </div>
+
+            <div class="wizard-step-node" data-target-step="5">
+              <div class="step-node-bubble">5</div>
+              <span class="step-node-label">Review</span>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               STEP 1: SELECT PROGRAM
+               ========================================== -->
+          <div class="wizard-step-pane is-active" data-step="1">
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-primary-dark);">1. Select Rehabilitation Program</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: 1.5rem;">
+              Choose the clinical focus that aligns with your recovery objectives.
+            </p>
+
+            <div class="selection-grid">
+              <div class="selection-card program-select-card is-selected" data-value="Physical Rehabilitation">
+                <span class="badge-tag">Restorative</span>
+                <div class="selection-card-title">Physical Rehabilitation</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0;">Mobility, post-surgical, joint restoration, balance.</p>
+              </div>
+
+              <div class="selection-card program-select-card" data-value="Neurological Rehabilitation">
+                <span class="badge-tag">Neuroplasticity</span>
+                <div class="selection-card-title">Neurological Rehabilitation</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0;">Stroke recovery, brain injury, Parkinson's care.</p>
+              </div>
+
+              <div class="selection-card program-select-card" data-value="Occupational Therapy">
+                <span class="badge-tag">Daily Living</span>
+                <div class="selection-card-title">Occupational Therapy</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0;">Fine motor dexterity, ergonomic, home adaptations.</p>
+              </div>
+
+              <div class="selection-card program-select-card" data-value="Speech & Language Therapy">
+                <span class="badge-tag">Cognitive</span>
+                <div class="selection-card-title">Speech & Language Therapy</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0;">Aphasia recovery, vocal therapy, swallowing care.</p>
+              </div>
+
+              <div class="selection-card program-select-card" data-value="Sports Injury Rehabilitation">
+                <span class="badge-tag">Athletic</span>
+                <div class="selection-card-title">Sports Injury Rehabilitation</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0;">ACL tear restoration, rotator cuff, return-to-sport.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               STEP 2: CHOOSE THERAPIST
+               ========================================== -->
+          <div class="wizard-step-pane" data-step="2">
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-primary-dark);">2. Select Specialist</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: 1.5rem;">
+              You may request a specific clinician or select First Available for earliest opening.
+            </p>
+
+            <div class="selection-grid">
+              <div class="selection-card therapist-select-card is-selected" data-value="Dr. Sarah Jenkins (PT, DPT)">
+                <span class="badge-tag">Neurology</span>
+                <div class="selection-card-title">Dr. Sarah Jenkins</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin: 0;">Lead Neurological Specialist • 14 Yrs Exp.</p>
+              </div>
+
+              <div class="selection-card therapist-select-card" data-value="Dr. Michael Chen (OTR/L, CHT)">
+                <span class="badge-tag">Occupational</span>
+                <div class="selection-card-title">Dr. Michael Chen</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin: 0;">Certified Hand & ADL Specialist • 11 Yrs Exp.</p>
+              </div>
+
+              <div class="selection-card therapist-select-card" data-value="Elena Rostova (MS, CCC-SLP)">
+                <span class="badge-tag">Speech</span>
+                <div class="selection-card-title">Elena Rostova</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin: 0;">Speech & Dysphagia Pathologist • 9 Yrs Exp.</p>
+              </div>
+
+              <div class="selection-card therapist-select-card" data-value="Dr. David Vance (PT, DPT, OCS)">
+                <span class="badge-tag">Sports PT</span>
+                <div class="selection-card-title">Dr. David Vance</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin: 0;">Orthopedic & Sports Specialist • 12 Yrs Exp.</p>
+              </div>
+
+              <div class="selection-card therapist-select-card" data-value="First Available Specialist">
+                <span class="badge-tag badge-accent">Fastest Booking</span>
+                <div class="selection-card-title">First Available Specialist</div>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin: 0;">Assigned by clinical triage based on earliest slot.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               STEP 3: SELECT DATE & TIME
+               ========================================== -->
+          <div class="wizard-step-pane" data-step="3">
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-primary-dark);">3. Select Date & Available Time Slot</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: 1.5rem;">
+              Showing sample availability slots for your initial 60-minute assessment.
+            </p>
+
+            <div style="max-width: 400px; margin-bottom: 2rem;">
+              <label for="booking-date-input" class="form-label">Preferred Date</label>
+              <input type="date" id="booking-date-input" class="form-control">
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <strong style="display: block; font-size: 0.95rem; color: var(--color-primary-dark); margin-bottom: 0.75rem;">Morning Slots (7:00 AM – 12:00 PM)</strong>
+              <div class="time-slots-grid">
+                <div class="time-slot-pill is-selected" data-time="08:30 AM">08:30 AM</div>
+                <div class="time-slot-pill" data-time="09:45 AM">09:45 AM</div>
+                <div class="time-slot-pill" data-time="11:00 AM">11:00 AM</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <strong style="display: block; font-size: 0.95rem; color: var(--color-primary-dark); margin-bottom: 0.75rem;">Afternoon Slots (12:00 PM – 5:00 PM)</strong>
+              <div class="time-slots-grid">
+                <div class="time-slot-pill" data-time="01:30 PM">01:30 PM</div>
+                <div class="time-slot-pill" data-time="02:45 PM">02:45 PM</div>
+                <div class="time-slot-pill" data-time="04:00 PM">04:00 PM</div>
+              </div>
+            </div>
+
+            <div>
+              <strong style="display: block; font-size: 0.95rem; color: var(--color-primary-dark); margin-bottom: 0.75rem;">Evening Slots (5:00 PM – 8:00 PM)</strong>
+              <div class="time-slots-grid">
+                <div class="time-slot-pill" data-time="05:30 PM">05:30 PM</div>
+                <div class="time-slot-pill" data-time="06:45 PM">06:45 PM</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               STEP 4: ENTER CONTACT INFORMATION
+               ========================================== -->
+          <div class="wizard-step-pane" data-step="4">
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-primary-dark);">4. Enter Patient Information</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: 1.5rem;">
+              Required details to confirm your slot. (General inquiry only; no sensitive medical history requested).
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+              <div class="form-group">
+                <label for="book-name" class="form-label">Full Name <span style="color:#D32F2F;">*</span></label>
+                <input type="text" id="book-name" class="form-control" placeholder="e.g. Ramesh Iyer" required>
+              </div>
+
+              <div class="form-group">
+                <label for="book-email" class="form-label">Email Address <span style="color:#D32F2F;">*</span></label>
+                <input type="email" id="book-email" class="form-control" placeholder="name@example.com" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+              <div class="form-group">
+                <label for="book-phone" class="form-label">Phone Number <span style="color:#D32F2F;">*</span></label>
+                <input type="tel" id="book-phone" class="form-control" placeholder="+91 98765 43210" required>
+              </div>
+
+              <div class="form-group">
+                <label for="book-branch" class="form-label">Preferred Branch</label>
+                <select id="book-branch" class="form-control">
+                  <option value="Bengaluru">Bengaluru Branch Office</option>
+                  <option value="Hyderabad">Hyderabad Branch Office</option>
+                  <option value="Chennai">Chennai Branch Office</option>
+                  <option value="Coimbatore">Coimbatore Branch Office</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="book-notes" class="form-label">Accessibility or Scheduling Accommodations (Optional)</label>
+              <textarea id="book-notes" class="form-control" rows="3" placeholder="e.g. Wheelchair ramp needed, English/Tamil communication preferred..."></textarea>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               STEP 5: REVIEW REQUEST
+               ========================================== -->
+          <div class="wizard-step-pane" data-step="5">
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-primary-dark);">5. Review Assessment Request</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: 1.5rem;">
+              Please verify your appointment specifications before confirming.
+            </p>
+
+            <div class="booking-summary-card">
+              <div class="summary-row">
+                <span class="summary-label">Selected Program</span>
+                <span class="summary-value" id="sum-program">Physical Rehabilitation</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">Specialist</span>
+                <span class="summary-value" id="sum-therapist">Dr. Sarah Jenkins</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">Date & Time</span>
+                <span class="summary-value" id="sum-datetime">Pending</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">Patient Name</span>
+                <span class="summary-value" id="sum-patient">Ramesh Iyer</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">Contact Details</span>
+                <span class="summary-value" id="sum-contact">user@example.com</span>
+              </div>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--color-text-muted); text-align: center; margin-bottom: 0;">
+              *Demonstration static scheduling prototype. Confirmation assigns temporary sample availability.
+            </p>
+          </div>
+
+          <!-- ==========================================
+               STEP 6: CONFIRMATION STATE & DEMO ACTIONS
+               ========================================== -->
+          <div class="wizard-step-pane" data-step="6">
+            <div class="confirmation-card">
+              <div class="confirmation-badge-icon">
+                <i class="fa-solid fa-check"></i>
+              </div>
+
+              <h2 style="color: var(--color-primary-dark); margin-bottom: 0.5rem;">Assessment Booked!</h2>
+              <p class="lead" style="margin-bottom: 1.5rem;">
+                Booking Reference: <strong style="color: var(--color-primary);" id="conf-booking-id">STK-849201</strong>
+              </p>
+
+              <div id="conf-details" style="background-color: var(--color-bg-subtle); border: 1px solid var(--color-bg-border); border-radius: var(--radius-md); padding: 1.25rem; max-width: 500px; margin: 0 auto 2rem auto; text-align: left; font-size: 0.95rem; line-height: 1.7;">
+              </div>
+
+              <!-- Demonstration Actions (Reschedule and Cancellation) -->
+              <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <button type="button" class="btn btn-outline" id="btn-reschedule-demo">
+                  <i class="fa-solid fa-calendar-days"></i> Demonstrate Rescheduling
+                </button>
+                <button type="button" class="btn btn-outline" style="border-color:#D32F2F; color:#D32F2F;" id="btn-cancel-demo">
+                  <i class="fa-solid fa-ban"></i> Demonstrate Cancellation
+                </button>
+                <a href="index.html" class="btn btn-primary">
+                  <i class="fa-solid fa-house"></i> Return Home
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wizard Navigation Footer -->
+          <div class="wizard-footer-nav" id="wizard-controls-footer">
+            <button type="button" class="btn btn-outline" id="wizard-btn-prev" style="visibility: hidden;">
+              <i class="fa-solid fa-arrow-left"></i> Previous
+            </button>
+            <button type="button" class="btn btn-primary" id="wizard-btn-next">
+              Continue <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer with Branch Offices & Links -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" aria-label="STACKLY Home">
+            <img src="assets/Brand-logo.webp" alt="STACKLY Rehabilitation Logo" class="brand-logo-img">
+          </a>
+          <p class="footer-desc">
+            STACKLY Rehabilitation offers seamless patient assessments and personalized clinical pathways across four South Indian regional centers.
+          </p>
+          <div class="footer-social-links">
+            <a href="404.html" class="social-icon-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="404.html" class="social-icon-btn" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links-list">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+            <li><a href="programs.html"><i class="fa-solid fa-angle-right"></i> Rehabilitation Programs</a></li>
+            <li><a href="our-team.html"><i class="fa-solid fa-angle-right"></i> Our Specialists</a></li>
+            <li><a href="about.html"><i class="fa-solid fa-angle-right"></i> About STACKLY</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+            <li><a href="appointments.html"><i class="fa-solid fa-angle-right"></i> Book Assessment</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Specialized Care</h4>
+          <ul class="footer-links-list">
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Stroke Recovery Protocol</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Spinal Injury Rehabilitation</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Cognitive Speech Retraining</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Post-Surgical Joint Mobility</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Pediatric Motor Skills</a></li>
+            <li><a href="404.html"><i class="fa-solid fa-angle-right"></i> Geriatric Balance Training</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Branch Offices</h4>
+          <div class="footer-branch-grid">
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Bengaluru Branch Office</h5>
+              <p class="branch-address">
+                Evolve Studio, 4th Floor, Khata No 10, Begur – Koppa Rd, in front of SNN Raj Serenity, Suraksha Nagar, Yelenahalli, Begur, Bengaluru, Karnataka – 560068
+              </p>
+            </div>
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Hyderabad Branch Office</h5>
+              <p class="branch-address">
+                STACKLY, 4th floor, Jayasudha heights, Plot no 459, 100 feet road, Ayyappa society, Madhapur, Beside YSR statue, Hyderabad, Telangana – 500081
+              </p>
+            </div>
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Chennai Branch Office</h5>
+              <p class="branch-address">
+                No.9, Ambika Complex, 1st Floor, Gokulam Colony, Karanaipudhuchery main road, Urapakkam, Chennai, Tamil Nadu, India – 603202
+              </p>
+            </div>
+            <div class="footer-branch-item">
+              <h5 class="branch-city-title">Coimbatore Branch Office</h5>
+              <p class="branch-address">
+                Stackly, 79 Aiswarya Complex, Nethaji Road, PN Palayam, Coimbatore, Tamil Nadu, India – 641037
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <span class="current-year">2026</span> STACKLY Rehabilitation. All rights reserved. Every step forward matters.
+        </div>
+        <div class="footer-bottom-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Patient Rights</a>
+          <a href="404.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/appointments.js"></script>
+</body>
+</html>

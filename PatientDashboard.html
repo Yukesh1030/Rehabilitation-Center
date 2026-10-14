@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="STACKLY Rehabilitation Patient Portal - Track recovery milestones, upcoming appointments, and therapist-shared home exercise guides.">
+  <title>Patient Dashboard | STACKLY Rehabilitation</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/Brand-logo.webp">
+
+  <!-- Core & Dashboard CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="dashboard-body no-overflow">
+
+  <!-- Mobile Overlay -->
+  <div class="dash-sidebar-overlay"></div>
+
+  <!-- Sidebar: 5 Menus -->
+  <aside class="dash-sidebar" id="dash-sidebar" aria-label="Patient Portal Navigation">
+    <div class="dash-brand-bar">
+      <a href="index.html" aria-label="Go to Homepage">
+        <img src="assets/Brand-logo.webp" alt="STACKLY Logo" class="dash-brand-logo">
+      </a>
+      <span class="dash-role-badge">Patient</span>
+    </div>
+
+    <ul class="dash-nav-menu">
+      <li class="dash-nav-item">
+        <a href="#dashboard" class="active" data-view="view-patient-dash">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="dash-nav-item">
+        <a href="#appointments" data-view="view-patient-appts">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span>My Appointments</span>
+        </a>
+      </li>
+      <li class="dash-nav-item">
+        <a href="#recovery-plan" data-view="view-patient-plan">
+          <i class="fa-solid fa-person-walking-arrow-right"></i>
+          <span>My Recovery Plan</span>
+        </a>
+      </li>
+      <li class="dash-nav-item">
+        <a href="#progress-resources" data-view="view-patient-resources">
+          <i class="fa-solid fa-book-medical"></i>
+          <span>Progress & Resources</span>
+        </a>
+      </li>
+      <li class="dash-nav-item">
+        <a href="#support" data-view="view-patient-support">
+          <i class="fa-solid fa-headset"></i>
+          <span>Profile & Support</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- User Profile Bar -->
+    <div class="dash-user-bar">
+      <div class="dash-user-info">
+        <div class="dash-user-avatar">AR</div>
+        <div>
+          <div class="dash-user-name">Anand Raman</div>
+          <div class="dash-user-role">ID: PAT-1082 • Client</div>
+        </div>
+      </div>
+      <button type="button" class="btn-dash-logout" title="Log Out" aria-label="Log Out">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Workspace -->
+  <div class="dash-main-area">
+    <!-- Topbar -->
+    <header class="dash-topbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button type="button" class="dash-mobile-toggle" aria-label="Toggle Sidebar Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="dash-page-heading">
+          <span class="dash-page-title">Welcome Back, Anand</span>
+          <span class="dash-page-subtitle">Demonstration Patient Portal • Every Step Forward Matters</span>
+        </div>
+      </div>
+
+      <div class="dash-top-actions">
+        <a href="appointments.html" class="btn btn-sm btn-primary">
+          <i class="fa-regular fa-calendar-plus"></i> Book Next Session
+        </a>
+        <a href="index.html" class="btn btn-sm btn-outline" style="border-color:var(--dash-border); color:var(--dash-text-muted);">
+          <i class="fa-solid fa-house"></i> Public Site
+        </a>
+      </div>
+    </header>
+
+    <!-- Workspace Body -->
+    <main class="dash-content-body">
+      
+      <!-- ==========================================
+           VIEW 1: PATIENT DASHBOARD OVERVIEW
+           ========================================== -->
+      <div id="view-patient-dash" class="dash-view-section">
+        
+        <!-- 3 KPI Cards -->
+        <div class="kpi-cards-grid">
+          <div class="kpi-card">
+            <div>
+              <div class="kpi-label">Next Appointment</div>
+              <div class="kpi-value" style="font-size: 1.6rem; margin-top:0.35rem;">Tomorrow</div>
+              <div class="kpi-trend">
+                <i class="fa-regular fa-clock"></i> 10:30 AM with Dr. Sarah Jenkins
+              </div>
+            </div>
+            <div class="kpi-icon-wrap">
+              <i class="fa-regular fa-calendar-check"></i>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-accent">
+            <div>
+              <div class="kpi-label">Recovery Milestones</div>
+              <div class="kpi-value" id="kpi-patient-milestones">4 of 6</div>
+              <div class="kpi-trend" style="color:var(--dash-accent);">
+                <i class="fa-solid fa-medal"></i> In Active Progress
+              </div>
+            </div>
+            <div class="kpi-icon-wrap" style="color:var(--dash-accent); background:rgba(213,167,122,0.12);">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-warning">
+            <div>
+              <div class="kpi-label">Session Attendance</div>
+              <div class="kpi-value kpi-counter" data-target="94">94%</div>
+              <div class="kpi-trend" style="color:var(--dash-warning);">
+                <i class="fa-solid fa-fire"></i> 16 sessions completed
+              </div>
+            </div>
+            <div class="kpi-icon-wrap" style="color:var(--dash-warning); background:rgba(232,170,66,0.12);">
+              <i class="fa-solid fa-award"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panels Grid -->
+        <div class="dash-panel-grid">
+          
+          <!-- Panel 1: Next Session Details & Quick Actions -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-calendar-check" style="color:var(--dash-primary); margin-right:0.5rem;"></i> Confirmed Upcoming Therapy Session
+              </h3>
+              <span class="status-badge status-scheduled">Confirmed</span>
+            </div>
+
+            <div style="background:var(--dash-surface); border:1px solid var(--dash-border); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+                <div>
+                  <span style="font-size:0.75rem; text-transform:uppercase; color:var(--dash-text-muted); font-weight:600;">Active Clinical Pathway</span>
+                  <h3 style="color:var(--dash-text); font-size:1.35rem; margin:0.25rem 0;">Neurological Gait & Balance Retraining</h3>
+                  <p style="color:var(--dash-text-muted); font-size:0.875rem; margin:0;">
+                    Lead Specialist: <strong>Dr. Sarah Jenkins (PT, DPT)</strong> • Room: Neuro Suite 2
+                  </p>
+                </div>
+
+                <div style="text-align:right;">
+                  <strong style="font-size:1.15rem; color:var(--dash-accent); display:block;">Thursday, 10:30 AM</strong>
+                  <span style="font-size:0.8rem; color:var(--dash-text-dim);">60 Min 1-on-1 Session</span>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:1rem; margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid var(--dash-border-subtle); flex-wrap:wrap;">
+                <button type="button" class="btn btn-sm btn-outline" id="btn-patient-reschedule" style="border-color:var(--dash-border); color:var(--dash-text-muted);">
+                  <i class="fa-regular fa-clock"></i> Request Reschedule
+                </button>
+                <a href="contact.html" class="btn btn-sm btn-outline" style="border-color:var(--dash-border); color:var(--dash-text-muted);">
+                  <i class="fa-regular fa-message"></i> Message Care Team
+                </a>
+              </div>
+            </div>
+
+            <!-- Interactive Milestone Checklist -->
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                <h4 style="margin:0; font-size:1rem; color:var(--dash-text);">Personal Goal Milestones</h4>
+                <span id="patient-progress-percent" style="font-size:0.8rem; color:var(--dash-primary); font-weight:600;">67% Plan Milestones Completed</span>
+              </div>
+
+              <!-- Progress bar -->
+              <div style="height:8px; background:var(--dash-surface); border-radius:10px; overflow:hidden; margin-bottom:1.25rem; border:1px solid var(--dash-border);">
+                <div id="patient-progress-fill" style="width:67%; height:100%; background:linear-gradient(90deg, var(--dash-primary), var(--dash-accent)); border-radius:10px; transition:width 0.4s ease;"></div>
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                <label class="milestone-item completed" style="display:flex; align-items:center; gap:0.75rem; background:var(--dash-surface); padding:0.75rem 1rem; border-radius:8px; border:1px solid var(--dash-border); cursor:pointer;">
+                  <input type="checkbox" class="milestone-check" checked style="accent-color:var(--dash-primary); width:18px; height:18px;">
+                  <span style="font-size:0.875rem; color:var(--dash-text);">Independent 100m indoor walking without cane support</span>
+                </label>
+
+                <label class="milestone-item completed" style="display:flex; align-items:center; gap:0.75rem; background:var(--dash-surface); padding:0.75rem 1rem; border-radius:8px; border:1px solid var(--dash-border); cursor:pointer;">
+                  <input type="checkbox" class="milestone-check" checked style="accent-color:var(--dash-primary); width:18px; height:18px;">
+                  <span style="font-size:0.875rem; color:var(--dash-text);">Ascending 12 steps holding handrail comfortably</span>
+                </label>
+
+                <label class="milestone-item completed" style="display:flex; align-items:center; gap:0.75rem; background:var(--dash-surface); padding:0.75rem 1rem; border-radius:8px; border:1px solid var(--dash-border); cursor:pointer;">
+                  <input type="checkbox" class="milestone-check" checked style="accent-color:var(--dash-primary); width:18px; height:18px;">
+                  <span style="font-size:0.875rem; color:var(--dash-text);">Single leg stance balance hold for 20 seconds</span>
+                </label>
+
+                <label class="milestone-item completed" style="display:flex; align-items:center; gap:0.75rem; background:var(--dash-surface); padding:0.75rem 1rem; border-radius:8px; border:1px solid var(--dash-border); cursor:pointer;">
+                  <input type="checkbox" class="milestone-check" checked style="accent-color:var(--dash-primary); width:18px; height:18px;">
+                  <span style="font-size:0.875rem; color:var(--dash-text);">Self-administered daily home ankle mobility routine</span>
+                </label>
+
+                <label class="milestone-item" style="display:flex; align-items:center; gap:0.75rem; background:var(--dash-surface); padding:0.75rem 1rem; border-radius:8px; border:1px solid var(--dash-border); cursor:pointer;">
+                  <input type="checkbox" class="milestone-check" style="accent-color:var(--dash-primary); width:18px; height:18px;">
+                  <span style="font-size:0.875rem; color:var(--dash-text);">Outdoor unassisted walk around neighborhood block (Target Milestone)</span>
+                </label>
+
+                <label class="milestone-item" style="display:flex; align-items:center; gap:0.75rem; background:var(--dash-surface); padding:0.75rem 1rem; border-radius:8px; border:1px solid var(--dash-border); cursor:pointer;">
+                  <input type="checkbox" class="milestone-check" style="accent-color:var(--dash-primary); width:18px; height:18px;">
+                  <span style="font-size:0.875rem; color:var(--dash-text);">Full return to driving confidence assessment</span>
+                </label>
+              </div>
+
+              <p style="font-size:0.75rem; color:var(--dash-text-dim); margin-top:1rem; margin-bottom:0; font-style:italic;">
+                *Milestone indicators reflect demonstration self-reported checklist data and do not imply clinical guarantees or diagnostic clearance.
+              </p>
+            </div>
+          </div>
+
+          <!-- Panel 2: Therapist-Shared Resources & Reminders -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-folder-open" style="color:var(--dash-accent); margin-right:0.5rem;"></i> Therapist-Shared Resources
+              </h3>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              <div style="background:var(--dash-surface); border:1px solid var(--dash-border); border-radius:8px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:0.75rem;">
+                  <i class="fa-regular fa-file-pdf" style="font-size:1.5rem; color:#E05252;"></i>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--dash-text);">Home Neuro Balance Guide</div>
+                    <span style="font-size:0.75rem; color:var(--dash-text-dim);">Added by Dr. Sarah Jenkins</span>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline" style="border-color:var(--dash-border); color:var(--dash-text-muted);" onclick="window.showToast('Downloading Home Exercise PDF Guide...', 'info')">
+                  <i class="fa-solid fa-download"></i>
+                </button>
+              </div>
+
+              <div style="background:var(--dash-surface); border:1px solid var(--dash-border); border-radius:8px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:0.75rem;">
+                  <i class="fa-solid fa-video" style="font-size:1.35rem; color:var(--dash-primary);"></i>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--dash-text);">Gait Kinematics Video Tutorial</div>
+                    <span style="font-size:0.75rem; color:var(--dash-text-dim);">5 Min Video Exercise Demo</span>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline" style="border-color:var(--dash-border); color:var(--dash-text-muted);" onclick="window.showToast('Launching streaming video demonstration...', 'info')">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+              </div>
+
+              <div style="background:var(--dash-surface); border:1px solid var(--dash-border); border-radius:8px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:0.75rem;">
+                  <i class="fa-solid fa-heart-pulse" style="font-size:1.35rem; color:var(--dash-accent);"></i>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--dash-text);">Caregiver Posture & Safety</div>
+                    <span style="font-size:0.75rem; color:var(--dash-text-dim);">Family Support Checklist</span>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline" style="border-color:var(--dash-border); color:var(--dash-text-muted);" onclick="window.showToast('Opening Caregiver Checklist...', 'info')">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Notifications / Reminders -->
+            <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--dash-border-subtle);">
+              <h4 style="font-size:0.95rem; color:var(--dash-text); margin-bottom:0.75rem;">
+                <i class="fa-regular fa-bell" style="color:var(--dash-warning); margin-right:0.35rem;"></i> Reminders
+              </h4>
+              <p style="font-size:0.825rem; color:var(--dash-text-muted); line-height:1.6; margin:0;">
+                Please remember to hydrate well before your 10:30 AM session tomorrow and bring your supportive walking shoes.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 2: MY APPOINTMENTS
+           ========================================== -->
+      <div id="view-patient-appts" class="dash-view-section" style="display:none;">
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">My Appointment History & Schedule</h3>
+          </div>
+          <div class="dash-table-wrapper">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Therapist</th>
+                  <th>Program Type</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tomorrow, 10:30 AM</td>
+                  <td>Dr. Sarah Jenkins</td>
+                  <td>Neurological Rehabilitation</td>
+                  <td>Bengaluru South Hub (Suite 2)</td>
+                  <td><span class="status-badge status-scheduled">Upcoming</span></td>
+                </tr>
+                <tr>
+                  <td>12 Oct 2026, 10:30 AM</td>
+                  <td>Dr. Sarah Jenkins</td>
+                  <td>Neurological Rehabilitation</td>
+                  <td>Bengaluru South Hub (Suite 2)</td>
+                  <td><span class="status-badge status-completed">Attended</span></td>
+                </tr>
+                <tr>
+                  <td>09 Oct 2026, 10:30 AM</td>
+                  <td>Dr. Sarah Jenkins</td>
+                  <td>Neurological Rehabilitation</td>
+                  <td>Bengaluru South Hub (Suite 2)</td>
+                  <td><span class="status-badge status-completed">Attended</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 3: MY RECOVERY PLAN
+           ========================================== -->
+      <div id="view-patient-plan" class="dash-view-section" style="display:none;">
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">Recovery Plan Overview</h3>
+          </div>
+          <p style="color:var(--dash-text-muted); font-size:0.9rem;">
+            Phased 12-week rehabilitation trajectory designed to foster neurological plasticity and progressive lower limb balance restoration.
+          </p>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 4: PROGRESS & RESOURCES
+           ========================================== -->
+      <div id="view-patient-resources" class="dash-view-section" style="display:none;">
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">Educational Resources & Videos</h3>
+          </div>
+          <p style="color:var(--dash-text-muted); font-size:0.9rem;">
+            Curated clinical library assigned by your multidisciplinary care team.
+          </p>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           VIEW 5: PROFILE & SUPPORT
+           ========================================== -->
+      <div id="view-patient-support" class="dash-view-section" style="display:none;">
+        <div class="dash-panel" style="max-width:600px;">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">Patient Profile & Helpline</h3>
+          </div>
+          <p style="color:var(--dash-text-muted); font-size:0.9rem;">
+            Questions about your schedule or transport? Call our direct clinic concierge at +91 (080) 4567-8901.
+          </p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/patient-dashboard.js"></script>
+</body>
+</html>
