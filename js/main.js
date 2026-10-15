@@ -5,6 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initDynamicYear();
   initSmoothScroll();
+  initContentLinksRedirect();
 });
 
 // Update Copyright Year dynamically
@@ -38,6 +39,36 @@ function initSmoothScroll() {
   });
 }
 
+// Ensure in-page body content links (excluding navbar and footer) on target pages direct to 404.html
+function initContentLinksRedirect() {
+  const currentPath = window.location.pathname.split('/').pop().toLowerCase() || 'index.html';
+  const targetPages = ['index.html', 'programs.html', 'our-team.html', 'about.html', 'contact.html', ''];
+
+  if (!targetPages.includes(currentPath)) return;
+
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
+
+    // Exclude navbar/header and footer links
+    if (anchor.closest('.site-header') || anchor.closest('.site-footer')) {
+      return;
+    }
+
+    const href = anchor.getAttribute('href');
+    if (!href) return;
+
+    // If already 404.html, let browser handle normally
+    if (href === '404.html') return;
+
+    // Prevent navigation to other destinations and redirect to 404.html
+    if (!href.startsWith('javascript:')) {
+      e.preventDefault();
+      window.location.href = '404.html';
+    }
+  });
+}
+
 // Global Toast System
 window.showToast = function(message, type = 'info') {
   let container = document.getElementById('toast-container');
@@ -63,3 +94,4 @@ window.showToast = function(message, type = 'info') {
     setTimeout(() => toast.remove(), 400);
   }, 4000);
 };
+
