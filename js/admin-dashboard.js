@@ -3,10 +3,96 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initDynamicAdminProfile();
+  initSidebarBrandLogo();
   initDashboardSidebar();
   initAdminActions();
   initRefreshControl();
 });
+
+// Helper: Format friendly display name from email address
+function formatNameFromEmail(email) {
+  if (!email) return 'User';
+  const prefix = email.includes('@') ? email.split('@')[0] : email;
+  const cleaned = prefix.replace(/[._\-+]/g, ' ').trim();
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  if (!words.length) return 'User';
+  return words
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
+}
+
+// Helper: Calculate uppercase initials from name
+function getInitials(name) {
+  if (!name) return 'AD';
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length >= 2) {
+    return (words[0][0] + words[words.length - 1][0]).toUpperCase();
+  }
+  return name.slice(0, 2).toUpperCase();
+}
+
+// Dynamic User Profile for Admin Portal
+function initDynamicAdminProfile() {
+  const storedEmail = localStorage.getItem('stackly_user_email');
+  let adminName = localStorage.getItem('stackly_user_name');
+
+  if (!adminName && storedEmail) {
+    adminName = formatNameFromEmail(storedEmail);
+    localStorage.setItem('stackly_user_name', adminName);
+  }
+
+  if (!adminName) {
+    adminName = 'Dr. R. Alagappan';
+  }
+
+  // Update user name in sidebar
+  const nameEl = document.getElementById('dash-user-name') || document.querySelector('.dash-user-name');
+  if (nameEl) {
+    nameEl.textContent = adminName;
+  }
+
+  // Update avatar initials
+  const avatarEl = document.getElementById('dash-user-avatar') || document.querySelector('.dash-user-avatar');
+  if (avatarEl) {
+    avatarEl.textContent = getInitials(adminName);
+  }
+
+  // Update topbar greeting
+  const welcomeTitle = document.getElementById('dash-welcome-title') || document.querySelector('.dash-page-title');
+  if (welcomeTitle) {
+    const firstName = adminName.split(' ')[0] || adminName;
+    welcomeTitle.textContent = `Operations Overview • Welcome, ${firstName}`;
+  }
+
+  // Set email on role badge as title tooltip
+  const roleEl = document.getElementById('dash-user-role') || document.querySelector('.dash-user-role');
+  if (roleEl && storedEmail) {
+    roleEl.title = `Logged in: ${storedEmail}`;
+  }
+}
+
+// Role-based sidebar brand logo link
+function initSidebarBrandLogo() {
+  const brandLink = document.querySelector('.dash-brand-bar a');
+  if (!brandLink) return;
+
+  const role = (localStorage.getItem('stackly_user_role') || '').toLowerCase();
+  // Role of login: Admin -> AdminDashboard.html, Client/Patient -> PatientDashboard.html
+  const targetDashboard = role === 'admin' ? 'AdminDashboard.html' : 'PatientDashboard.html';
+  brandLink.setAttribute('href', targetDashboard);
+  brandLink.setAttribute('aria-label', `Go to ${role === 'admin' ? 'Admin' : 'Patient'} Dashboard`);
+
+  brandLink.addEventListener('click', (e) => {
+    const currentPath = window.location.pathname.split('/').pop().toLowerCase();
+    if (currentPath === targetDashboard.toLowerCase()) {
+      e.preventDefault();
+      const defaultNavLink = document.querySelector('.dash-nav-item a[data-view="view-dashboard"]');
+      if (defaultNavLink) defaultNavLink.click();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+}
 
 // Mobile off-canvas drawer
 function initDashboardSidebar() {
