@@ -56,6 +56,9 @@ function initPatientSidebar() {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       if (confirm('Log out from Patient Portal?')) {
+        localStorage.removeItem('stackly_user_email');
+        localStorage.removeItem('stackly_user_role');
+        localStorage.removeItem('stackly_user_name');
         window.location.href = 'login.html';
       }
     });

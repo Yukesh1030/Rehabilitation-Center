@@ -110,9 +110,12 @@ function initAdminActions() {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       if (confirm('Are you sure you want to log out of the Administrator Portal?')) {
+        localStorage.removeItem('stackly_user_email');
         localStorage.removeItem('stackly_user_role');
+        localStorage.removeItem('stackly_user_name');
         window.location.href = 'login.html';
       }
     });
   }
 }
+

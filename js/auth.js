@@ -112,14 +112,27 @@ function initLoginForm() {
 
     if (isValid) {
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
+      // Determine user name from registered users or email formatting
+      let displayName = '';
+      try {
+        const registeredUsers = JSON.parse(localStorage.getItem('stackly_registered_users') || '{}');
+        if (registeredUsers[emailVal.toLowerCase()] && registeredUsers[emailVal.toLowerCase()].name) {
+          displayName = registeredUsers[emailVal.toLowerCase()].name;
+        }
+      } catch (err) {}
+
+      if (!displayName) {
+        displayName = formatNameFromEmail(emailVal);
+      }
 
       // Store active session in localStorage
       localStorage.setItem('stackly_user_email', emailVal);
       localStorage.setItem('stackly_user_role', roleVal);
+      localStorage.setItem('stackly_user_name', displayName);
 
       setTimeout(() => {
-        window.showToast(`Welcome back! Redirecting to ${roleVal} Dashboard...`, 'success');
+        const greetingName = displayName.split(' ')[0] || displayName;
+        window.showToast(`Welcome back, ${greetingName}! Redirecting to ${roleVal} Dashboard...`, 'success');
 
         setTimeout(() => {
           if (roleVal === 'Admin') {
@@ -132,6 +145,18 @@ function initLoginForm() {
       }, 1000);
     }
   });
+}
+
+// Helper: Format friendly display name from email address
+function formatNameFromEmail(email) {
+  if (!email) return 'User';
+  const prefix = email.includes('@') ? email.split('@')[0] : email;
+  const cleaned = prefix.replace(/[._\-+]/g, ' ').trim();
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  if (!words.length) return 'User';
+  return words
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
 }
 
 // Signup Form Handling
@@ -197,6 +222,18 @@ function initSignupForm() {
     if (isValid) {
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+
+      // Save registered user mapping
+      const roleVal = roleSelect ? roleSelect.value : 'Client';
+      try {
+        const registeredUsers = JSON.parse(localStorage.getItem('stackly_registered_users') || '{}');
+        registeredUsers[emailVal.toLowerCase()] = { name: nameVal, role: roleVal };
+        localStorage.setItem('stackly_registered_users', JSON.stringify(registeredUsers));
+      } catch (err) {}
+
+      localStorage.setItem('stackly_user_name', nameVal);
+      localStorage.setItem('stackly_user_email', emailVal);
+      localStorage.setItem('stackly_user_role', roleVal);
 
       setTimeout(() => {
         window.showToast('Account successfully created! Please log in.', 'success');
