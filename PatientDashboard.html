@@ -25,7 +25,7 @@
   <!-- Sidebar: 5 Menus -->
   <aside class="dash-sidebar" id="dash-sidebar" aria-label="Patient Portal Navigation">
     <div class="dash-brand-bar">
-      <a href="index.html" aria-label="Go to Homepage">
+      <a href="PatientDashboard.html" class="dash-brand-link" id="sidebar-brand-logo" aria-label="Go to Dashboard">
         <img src="assets/Brand-logo.webp" alt="STACKLY Logo" class="dash-brand-logo">
       </a>
       <span class="dash-role-badge">Patient</span>
@@ -67,10 +67,10 @@
     <!-- User Profile Bar -->
     <div class="dash-user-bar">
       <div class="dash-user-info">
-        <div class="dash-user-avatar">AR</div>
+        <div class="dash-user-avatar" id="dash-user-avatar">AR</div>
         <div>
-          <div class="dash-user-name">Anand Raman</div>
-          <div class="dash-user-role">ID: PAT-1082 • Client</div>
+          <div class="dash-user-name" id="dash-user-name">Anand Raman</div>
+          <div class="dash-user-role" id="dash-user-role">ID: PAT-1082 • Client</div>
         </div>
       </div>
       <button type="button" class="btn-dash-logout" title="Log Out" aria-label="Log Out">
@@ -88,7 +88,7 @@
           <i class="fa-solid fa-bars"></i>
         </button>
         <div class="dash-page-heading">
-          <span class="dash-page-title">Welcome Back, Anand</span>
+          <span class="dash-page-title" id="dash-welcome-title">Welcome Back, Anand</span>
           <span class="dash-page-subtitle">Demonstration Patient Portal • Every Step Forward Matters</span>
         </div>
       </div>
