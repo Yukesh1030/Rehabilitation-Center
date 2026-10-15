@@ -61,8 +61,14 @@ function initDynamicAdminProfile() {
   // Update topbar greeting
   const welcomeTitle = document.getElementById('dash-welcome-title') || document.querySelector('.dash-page-title');
   if (welcomeTitle) {
-    const firstName = adminName.split(' ')[0] || adminName;
-    welcomeTitle.textContent = `Operations Overview • Welcome, ${firstName}`;
+    let displayName = adminName;
+    if (adminName.startsWith('Dr.') || adminName.startsWith('Dr ')) {
+      const parts = adminName.split(' ');
+      displayName = parts.length > 2 ? `Dr. ${parts[parts.length - 1]}` : adminName;
+    } else {
+      displayName = adminName.split(' ')[0] || adminName;
+    }
+    welcomeTitle.textContent = `Operations Overview • Welcome, ${displayName}`;
   }
 
   // Set email on role badge as title tooltip
