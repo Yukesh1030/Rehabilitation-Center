@@ -306,7 +306,7 @@ button, input, select, textarea {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1020;
   background-color: rgba(244, 243, 236, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -448,20 +448,27 @@ button, input, select, textarea {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+.nav-mobile-actions {
+  display: none;
+}
+
 .nav-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(20, 48, 42, 0.4);
+  background-color: rgba(20, 48, 42, 0.45);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transition: opacity var(--transition-normal), visibility var(--transition-normal);
-  z-index: 1000;
+  z-index: 1010;
 }
 
 .nav-backdrop.is-active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 /* ==========================================================================

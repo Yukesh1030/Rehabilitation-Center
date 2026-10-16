@@ -81,13 +81,15 @@
     flex-direction: column;
     justify-content: flex-start;
     padding: calc(var(--header-height) + 1.5rem) 2rem 2.5rem 2rem;
-    transition: right var(--transition-normal);
-    z-index: 1001;
+    transition: right var(--transition-normal), visibility var(--transition-normal);
+    z-index: 1021;
     overflow-y: auto;
+    visibility: hidden;
   }
 
   .nav-menu-wrapper.is-open {
     right: 0;
+    visibility: visible;
   }
 
   .nav-links {

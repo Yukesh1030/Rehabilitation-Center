@@ -48,16 +48,29 @@ function initMobileMenu() {
     document.body.style.overflow = isOpen ? 'hidden' : '';
   };
 
-  hamburgerBtn.addEventListener('click', () => toggleMenu());
+  hamburgerBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+
   backdrop.addEventListener('click', () => toggleMenu(false));
 
-  // Close when clicking nav links
+  // Close when clicking nav links or action buttons
   navMenu.querySelectorAll('.nav-link, .btn').forEach(link => {
     link.addEventListener('click', () => {
       if (window.innerWidth <= 768) {
         toggleMenu(false);
       }
     });
+  });
+
+  // Close when clicking outside of navMenu and hamburgerBtn
+  document.addEventListener('click', (e) => {
+    if (navMenu.classList.contains('is-open')) {
+      if (!navMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+        toggleMenu(false);
+      }
+    }
   });
 
   // ESC key closes menu
