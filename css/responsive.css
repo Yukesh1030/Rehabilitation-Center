@@ -562,3 +562,7 @@
   overflow-x: hidden !important;
   width: 100%;
 }
+
+body.dashboard-body {
+  overflow-x: clip !important;
+}

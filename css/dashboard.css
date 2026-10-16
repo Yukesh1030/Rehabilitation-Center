@@ -36,8 +36,15 @@
 html, body.dashboard-body {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
   box-sizing: border-box;
+}
+
+body.dashboard-body {
+  overflow-x: clip;
+}
+
+body.dashboard-body.no-overflow {
+  overflow-x: clip !important;
 }
 
 *, *::before, *::after {
@@ -243,14 +250,15 @@ body.dashboard-body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+  overflow-x: clip;
   background-color: var(--dash-bg);
+  position: relative;
 }
 
-/* Topbar */
+/* Topbar - Sticky Header */
 .dash-topbar {
   min-height: var(--dash-header-height);
-  background-color: rgba(12, 21, 19, 0.85);
+  background-color: rgba(12, 21, 19, 0.95);
   border-bottom: 1px solid var(--dash-border);
   padding: 0.75rem clamp(1.25rem, 2.5vw, 2.25rem);
   display: flex;
@@ -259,7 +267,9 @@ body.dashboard-body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
   gap: 1rem;
   flex-wrap: wrap;
 }
