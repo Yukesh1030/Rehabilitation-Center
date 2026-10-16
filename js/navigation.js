@@ -27,6 +27,7 @@ function initNavbarScroll() {
 
 // Mobile Hamburger Navigation
 function initMobileMenu() {
+  const header = document.querySelector('.site-header');
   const hamburgerBtn = document.querySelector('.hamburger-btn');
   const navMenu = document.querySelector('.nav-menu-wrapper');
   let backdrop = document.querySelector('.nav-backdrop');
@@ -43,6 +44,9 @@ function initMobileMenu() {
     const isOpen = open !== undefined ? open : !navMenu.classList.contains('is-open');
     hamburgerBtn.classList.toggle('is-active', isOpen);
     navMenu.classList.toggle('is-open', isOpen);
+    if (header) {
+      header.classList.toggle('menu-open', isOpen);
+    }
     backdrop.classList.toggle('is-active', isOpen);
     hamburgerBtn.setAttribute('aria-expanded', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';

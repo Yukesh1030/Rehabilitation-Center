@@ -81,7 +81,7 @@
          ========================================================================== -->
     <section class="section hero-section" style="padding-top: clamp(2.5rem, 5vw, 4.5rem); padding-bottom: clamp(3rem, 6vw, 5.5rem);">
       <div class="container">
-        <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center;">
+        <div class="hero-grid">
           
           <!-- Hero Text -->
           <div class="hero-content">
@@ -108,16 +108,16 @@
             </div>
 
             <!-- Trust proof badges -->
-            <div style="display: flex; gap: 2rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-bg-border);">
-              <div>
+            <div class="hero-badges-row">
+              <div class="hero-badge-item">
                 <strong style="font-size: 1.5rem; color: var(--color-primary); font-family: var(--font-sans); display: block;">100%</strong>
                 <span style="font-size: 0.85rem; color: var(--color-text-muted);">Licensed Clinicians</span>
               </div>
-              <div>
+              <div class="hero-badge-item">
                 <strong style="font-size: 1.5rem; color: var(--color-primary); font-family: var(--font-sans); display: block;">4 Centers</strong>
                 <span style="font-size: 0.85rem; color: var(--color-text-muted);">Regional Facilities</span>
               </div>
-              <div>
+              <div class="hero-badge-item">
                 <strong style="font-size: 1.5rem; color: var(--color-primary); font-family: var(--font-sans); display: block;">1-on-1</strong>
                 <span style="font-size: 0.85rem; color: var(--color-text-muted);">Personalized Care</span>
               </div>
@@ -402,7 +402,7 @@
           </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div class="facilities-grid">
           <div class="card animate-fade-up">
             <div class="card-img-wrapper" style="aspect-ratio: 16/11;">
               <img src="assets/Gym.webp" alt="Modern rehabilitation gym suite with specialized equipment" class="card-img" loading="lazy">
@@ -442,7 +442,7 @@
          ========================================================================== -->
     <section class="section section-bg-alt" id="personalized-care-section">
       <div class="container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center;">
+        <div class="content-split-grid personalized-care-grid">
           <div class="animate-fade-up">
             <div style="border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 1/1;">
               <img src="assets/Personalized Care.webp" alt="Therapist guiding a patient with individualized personalized care" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
@@ -474,7 +474,7 @@
          ========================================================================== -->
     <section class="section" id="caregiver-support-section">
       <div class="container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center;">
+        <div class="content-split-grid caregiver-support-grid">
           <div class="animate-fade-up">
             <span class="section-badge">06. Surrounding Support</span>
             <h2 class="section-title">Empowering Families & Caregivers</h2>
@@ -484,7 +484,7 @@
             <p style="color: var(--color-text-secondary); line-height: 1.75; margin-bottom: 1.5rem;">
               Our dedicated family education sessions teach safe transfer techniques, home accessibility adjustments, emotional burnout prevention, and encouraging communication strategies that nurture independence.
             </p>
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div class="caregiver-actions-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
               <a href="404.html" class="btn btn-primary">Join Caregiver Workshops</a>
               <a href="404.html" class="btn btn-outline">Download Home Guide</a>
             </div>
@@ -514,7 +514,7 @@
           </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center;">
+        <div class="content-split-grid tracking-progress-grid">
           <div class="card animate-fade-up" style="background: #FFFFFF; padding: 2rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-bg-border);">
               <div>
@@ -576,7 +576,7 @@
           </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+        <div class="patient-stories-grid">
           <!-- Story 1 -->
           <div class="card animate-fade-up">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
@@ -651,7 +651,7 @@
           </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.75rem;">
+        <div class="why-choose-grid">
           <div class="card animate-fade-up">
             <div class="journey-node-icon" style="margin-bottom: 1rem;"><i class="fa-solid fa-users"></i></div>
             <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Coordinated Team Care</h3>
@@ -693,7 +693,7 @@
          ========================================================================== -->
     <section class="section" id="final-cta-section" style="background: radial-gradient(circle at 50% 50%, rgba(40, 91, 80, 0.08) 0%, rgba(244, 243, 236, 1) 75%);">
       <div class="container">
-        <div style="background-color: var(--color-bg-card); border: 2px solid rgba(var(--color-primary-rgb), 0.15); border-radius: var(--radius-xl); padding: clamp(2.5rem, 6vw, 4.5rem); box-shadow: var(--shadow-lg); text-align: center; max-width: 900px; margin: 0 auto; position: relative;">
+        <div class="final-cta-card">
           
           <span class="section-badge">10. Begin Today</span>
           <h2 style="font-size: clamp(2.2rem, 4vw, 3.25rem); color: var(--color-primary-dark); margin-bottom: 1rem;">
@@ -703,7 +703,7 @@
             Whether you are beginning recovery from an acute injury, managing a neurological condition, or seeking to restore movement freedom, our compassionate team is ready to guide you.
           </p>
 
-          <div style="display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;">
+          <div class="final-cta-buttons">
             <a href="404.html" class="btn btn-primary btn-lg" id="final-cta-book">
               <i class="fa-regular fa-calendar-check"></i> Book an Assessment
             </a>
