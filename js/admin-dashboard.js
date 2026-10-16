@@ -100,7 +100,7 @@ function initSidebarBrandLogo() {
   });
 }
 
-// Mobile off-canvas drawer
+// Mobile off-canvas drawer & hash routing
 function initDashboardSidebar() {
   const toggleBtn = document.querySelector('.dash-mobile-toggle');
   const sidebar = document.querySelector('.dash-sidebar');
@@ -128,23 +128,62 @@ function initDashboardSidebar() {
   const menuLinks = document.querySelectorAll('.dash-nav-item a');
   const views = document.querySelectorAll('.dash-view-section');
 
-  menuLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      const targetView = link.getAttribute('data-view');
-      if (targetView && document.getElementById(targetView)) {
-        e.preventDefault();
-        menuLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
+  function activateView(targetView, updateHash = true) {
+    if (!targetView) return;
+    const targetEl = document.getElementById(targetView);
+    if (!targetEl) return;
 
-        views.forEach(v => v.style.display = 'none');
-        document.getElementById(targetView).style.display = 'block';
+    views.forEach(v => v.style.display = 'none');
+    targetEl.style.display = 'block';
 
-        if (window.innerWidth <= 860) {
-          toggle(false);
+    menuLinks.forEach(l => {
+      if (l.getAttribute('data-view') === targetView) {
+        l.classList.add('active');
+        if (updateHash) {
+          const hash = l.getAttribute('href');
+          if (hash && window.location.hash !== hash) {
+            history.replaceState(null, '', hash);
+          }
         }
+      } else {
+        l.classList.remove('active');
       }
     });
+
+    if (window.innerWidth <= 860) {
+      toggle(false);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  menuLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetView = link.getAttribute('data-view');
+      activateView(targetView, true);
+    });
   });
+
+  // Handle URL hash on initial load and hashchange
+  function handleUrlHash() {
+    const rawHash = (window.location.hash || '').replace('#', '').trim();
+    if (!rawHash) return;
+
+    // Check if any link matches href="#hash" or data-view="view-hash"
+    const matchedLink = Array.from(menuLinks).find(l => {
+      const hrefHash = (l.getAttribute('href') || '').replace('#', '').trim();
+      const dataView = (l.getAttribute('data-view') || '').replace('view-', '').trim();
+      return hrefHash === rawHash || dataView === rawHash;
+    });
+
+    if (matchedLink) {
+      const viewId = matchedLink.getAttribute('data-view');
+      activateView(viewId, false);
+    }
+  }
+
+  window.addEventListener('hashchange', handleUrlHash);
+  handleUrlHash();
 }
 
 // Refresh KPI Controls
@@ -157,9 +196,11 @@ function initRefreshControl() {
     
     setTimeout(() => {
       refreshBtn.classList.remove('spinning');
-      window.showToast('Clinical metrics and schedule updated successfully.', 'success');
+      if (window.showToast) {
+        window.showToast('Clinical metrics and schedule updated successfully.', 'success');
+      }
 
-      // Random jitter demo data
+      // Refresh demo numbers
       const kpiPatients = document.getElementById('kpi-active-patients');
       const kpiSessions = document.getElementById('kpi-today-sessions');
       const kpiPending = document.getElementById('kpi-pending-requests');
@@ -167,35 +208,235 @@ function initRefreshControl() {
       if (kpiPatients) kpiPatients.textContent = '186';
       if (kpiSessions) kpiSessions.textContent = '32';
       if (kpiPending) kpiPending.textContent = '9';
-    }, 800);
+    }, 600);
   });
 }
 
-// Admin Interactive Row Actions
+// Admin Interactive Handlers & Table Filtering
 function initAdminActions() {
+  const toast = (msg, type = 'info') => {
+    if (window.showToast) window.showToast(msg, type);
+    else alert(msg);
+  };
+
   // Accept / Reschedule requests
   document.querySelectorAll('.btn-accept-request').forEach(btn => {
     btn.addEventListener('click', function() {
       const row = this.closest('tr');
-      const name = row.querySelector('.patient-name').textContent;
+      const name = row.querySelector('.patient-name')?.textContent || 'Patient';
       const statusCell = row.querySelector('.status-col');
       
-      statusCell.innerHTML = '<span class="status-badge status-scheduled"><i class="fa-solid fa-check"></i> Confirmed</span>';
-      this.parentElement.innerHTML = '<span style="color:var(--dash-text-muted);font-size:0.8rem;">Assigned</span>';
-      window.showToast(`Assessment request for ${name} has been confirmed.`, 'success');
+      if (statusCell) {
+        statusCell.innerHTML = '<span class="status-badge status-scheduled"><span class="badge-dot"></span> Confirmed</span>';
+      }
+      this.parentElement.innerHTML = '<span style="color:var(--dash-text-muted);font-size:0.8rem;"><i class="fa-solid fa-check"></i> Assigned</span>';
+      toast(`Assessment request for ${name} has been confirmed.`, 'success');
     });
   });
 
   document.querySelectorAll('.btn-reschedule-request').forEach(btn => {
     btn.addEventListener('click', function() {
       const row = this.closest('tr');
-      const name = row.querySelector('.patient-name').textContent;
+      const name = row.querySelector('.patient-name')?.textContent || 'Patient';
       const newTime = prompt(`Suggest new assessment slot for ${name}:`, 'Tomorrow, 02:00 PM');
       if (newTime) {
-        window.showToast(`Reschedule proposal (${newTime}) sent to ${name}.`, 'info');
+        toast(`Reschedule proposal (${newTime}) sent to ${name}.`, 'info');
       }
     });
   });
+
+  // Check-In Patient Button
+  document.querySelectorAll('.btn-checkin').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const row = this.closest('tr');
+      const name = row.querySelector('.patient-name')?.textContent || 'Patient';
+      const statusCell = row.querySelector('.status-col');
+      if (statusCell) {
+        statusCell.innerHTML = '<span class="status-badge status-completed"><span class="badge-dot"></span> In Therapy</span>';
+      }
+      this.parentElement.innerHTML = '<span style="color:var(--dash-success);font-size:0.8rem;"><i class="fa-solid fa-circle-check"></i> Checked-In</span>';
+      toast(`${name} checked in to clinical suite.`, 'success');
+    });
+  });
+
+  // Launch Telehealth
+  document.querySelectorAll('.btn-launch-telehealth').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const row = this.closest('tr');
+      const name = row.querySelector('.patient-name')?.textContent || 'Patient';
+      toast(`Initiating encrypted WebRTC telehealth suite with ${name}...`, 'info');
+    });
+  });
+
+  // View Clinical Chart
+  document.querySelectorAll('.btn-patient-chart').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const row = this.closest('tr');
+      const name = row.querySelector('.patient-name')?.textContent || 'Patient';
+      toast(`Opening clinical rehabilitation chart for ${name}.`, 'info');
+    });
+  });
+
+  // Message Staff
+  document.querySelectorAll('.btn-msg-staff').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const name = this.getAttribute('data-name') || 'Clinician';
+      toast(`Connecting to internal clinical intercom with ${name}...`, 'info');
+    });
+  });
+
+  // Download Reports
+  document.querySelectorAll('.btn-download-report').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const title = this.getAttribute('data-title') || 'Report';
+      toast(`Preparing download for: ${title}`, 'success');
+    });
+  });
+
+  // Add Patient / Staff Quick Actions
+  const btnAddPatient = document.getElementById('btn-add-patient');
+  if (btnAddPatient) {
+    btnAddPatient.addEventListener('click', () => {
+      const name = prompt('Enter new patient full name:', 'Lakshmi Narayanan');
+      if (name) {
+        toast(`New clinical intake chart created for ${name}.`, 'success');
+      }
+    });
+  }
+
+  const btnAddStaff = document.getElementById('btn-add-staff');
+  if (btnAddStaff) {
+    btnAddStaff.addEventListener('click', () => {
+      const name = prompt('Enter clinical specialist name:', 'Dr. Ananya Rao');
+      if (name) {
+        toast(`Staff credentials created for ${name}. Invite transmitted.`, 'success');
+      }
+    });
+  }
+
+  const btnExportRoster = document.getElementById('btn-export-roster');
+  if (btnExportRoster) {
+    btnExportRoster.addEventListener('click', () => {
+      toast('Generating encrypted multi-branch staff & patient roster (CSV)...', 'success');
+    });
+  }
+
+  const btnCreateAppt = document.getElementById('btn-create-appt');
+  if (btnCreateAppt) {
+    btnCreateAppt.addEventListener('click', () => {
+      const patient = prompt('Enter patient name for appointment:', 'Vignesh Raman');
+      if (patient) {
+        toast(`New appointment slot booked for ${patient}. Notification sent.`, 'success');
+      }
+    });
+  }
+
+  const btnExportSchedule = document.getElementById('btn-export-schedule');
+  if (btnExportSchedule) {
+    btnExportSchedule.addEventListener('click', () => {
+      toast('Generating Daily Multi-Suite Schedule PDF...', 'success');
+    });
+  }
+
+  const btnCustomReport = document.getElementById('btn-custom-report');
+  if (btnCustomReport) {
+    btnCustomReport.addEventListener('click', () => {
+      toast('Opening Custom Cohort Analytics Generator...', 'info');
+    });
+  }
+
+  const btnExportAuditPack = document.getElementById('btn-export-audit-pack');
+  if (btnExportAuditPack) {
+    btnExportAuditPack.addEventListener('click', () => {
+      toast('Compiling certified NABH Audit Pack (PDF • 14 MB)...', 'success');
+    });
+  }
+
+  const btnSaveSettings = document.getElementById('btn-save-settings');
+  if (btnSaveSettings) {
+    btnSaveSettings.addEventListener('click', () => {
+      toast('Center administration protocols and settings saved successfully.', 'success');
+    });
+  }
+
+  const btnResetSettings = document.getElementById('btn-reset-settings');
+  if (btnResetSettings) {
+    btnResetSettings.addEventListener('click', () => {
+      if (confirm('Reset center administration settings to NABH defaults?')) {
+        toast('Settings reset to default clinical baseline.', 'info');
+      }
+    });
+  }
+
+  const btnManualBackup = document.getElementById('btn-manual-backup');
+  if (btnManualBackup) {
+    btnManualBackup.addEventListener('click', function() {
+      const originalHTML = this.innerHTML;
+      this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encrypting & Replicating...';
+      this.disabled = true;
+
+      setTimeout(() => {
+        this.innerHTML = originalHTML;
+        this.disabled = false;
+        toast('Encrypted multi-region cloud backup completed successfully (4.2 GB replicated).', 'success');
+      }, 1200);
+    });
+  }
+
+  // Interactive Patient Table Search Filter
+  const searchPatients = document.getElementById('search-patients');
+  const filterProg = document.getElementById('filter-patient-program');
+  const filterStatus = document.getElementById('filter-patient-status');
+  const tablePatients = document.getElementById('table-patients');
+
+  function filterPatientRows() {
+    if (!tablePatients) return;
+    const query = (searchPatients?.value || '').toLowerCase().trim();
+    const prog = (filterProg?.value || '').toLowerCase();
+    const rows = tablePatients.querySelectorAll('tbody tr');
+
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      const matchesQuery = !query || text.includes(query);
+      const matchesProg = !prog || text.includes(prog);
+      row.style.display = matchesQuery && matchesProg ? '' : 'none';
+    });
+  }
+
+  if (searchPatients) searchPatients.addEventListener('input', filterPatientRows);
+  if (filterProg) filterProg.addEventListener('change', filterPatientRows);
+  if (filterStatus) filterStatus.addEventListener('change', filterPatientRows);
+
+  // Interactive Appointments Table Filter
+  const searchAppts = document.getElementById('search-appointments');
+  const filterBranch = document.getElementById('filter-appt-branch');
+  const filterApptStatus = document.getElementById('filter-appt-status');
+  const tableAppts = document.getElementById('table-appointments');
+
+  function filterAppointmentRows() {
+    if (!tableAppts) return;
+    const query = (searchAppts?.value || '').toLowerCase().trim();
+    const branch = (filterBranch?.value || '').toLowerCase();
+    const status = (filterApptStatus?.value || '').toLowerCase();
+    const rows = tableAppts.querySelectorAll('tbody tr');
+
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      const matchesQuery = !query || text.includes(query);
+      const matchesBranch = !branch || text.includes(branch) || 
+        (branch === 'blr' && text.includes('bengaluru')) ||
+        (branch === 'hyd' && text.includes('hyderabad')) ||
+        (branch === 'maa' && text.includes('chennai')) ||
+        (branch === 'cbe' && text.includes('coimbatore'));
+      const matchesStatus = !status || text.includes(status);
+
+      row.style.display = matchesQuery && matchesBranch && matchesStatus ? '' : 'none';
+    });
+  }
+
+  if (searchAppts) searchAppts.addEventListener('input', filterAppointmentRows);
+  if (filterBranch) filterBranch.addEventListener('change', filterAppointmentRows);
+  if (filterApptStatus) filterApptStatus.addEventListener('change', filterAppointmentRows);
 
   // Logout button
   const logoutBtn = document.querySelector('.btn-dash-logout');
@@ -210,4 +451,5 @@ function initAdminActions() {
     });
   }
 }
+
 

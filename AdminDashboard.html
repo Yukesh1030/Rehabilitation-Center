@@ -434,45 +434,465 @@
            VIEW 2: PATIENTS & STAFF
            ========================================== -->
       <div id="view-patients-staff" class="dash-view-section" style="display:none;">
-        <div class="dash-panel">
-          <div class="dash-panel-header">
-            <h3 class="dash-panel-title">Patient & Clinical Staff Directory</h3>
+        <div class="dash-header-action-row">
+          <div>
+            <h2 class="dash-panel-title" style="font-size:1.35rem; color:#FFFFFF;">
+              <i class="fa-solid fa-users" style="color:var(--dash-primary);"></i> Patients & Clinical Staff Operations
+            </h2>
+            <p style="color:var(--dash-text-muted); font-size:0.85rem; margin-top:0.25rem;">
+              Multi-disciplinary care teams, active therapy admissions, and family caregiver coordination registry.
+            </p>
           </div>
-          <p style="color:var(--dash-text-muted); font-size:0.9rem;">
-            Role-restricted demonstration clinical roster. Patient health records are safeguarded and strictly protected.
-          </p>
+          <div class="dash-header-actions">
+            <button type="button" class="btn btn-sm btn-primary" id="btn-add-patient">
+              <i class="fa-solid fa-user-plus"></i> Add Patient
+            </button>
+            <button type="button" class="btn btn-sm btn-outline" id="btn-add-staff">
+              <i class="fa-solid fa-user-doctor"></i> Add Clinician
+            </button>
+            <button type="button" class="btn btn-sm btn-outline" id="btn-export-roster">
+              <i class="fa-solid fa-file-arrow-down"></i> Export Roster (CSV)
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Quick Stats -->
+        <div class="kpi-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem;">
+          <div class="kpi-card">
+            <div class="kpi-card-content">
+              <div class="kpi-label">Active Patients</div>
+              <div class="kpi-value">186</div>
+              <div class="kpi-trend"><i class="fa-solid fa-bed"></i> 94 In-Clinic • 92 Outpatient</div>
+            </div>
+            <div class="kpi-icon-wrap"><i class="fa-solid fa-hospital-user"></i></div>
+          </div>
+
+          <div class="kpi-card kpi-accent">
+            <div class="kpi-card-content">
+              <div class="kpi-label">Clinicians On Duty</div>
+              <div class="kpi-value">16</div>
+              <div class="kpi-trend trend-accent"><i class="fa-solid fa-stethoscope"></i> 12 Therapists • 4 Physiatrists</div>
+            </div>
+            <div class="kpi-icon-wrap" style="color:var(--dash-accent); background:rgba(213,167,122,0.12);"><i class="fa-solid fa-user-doctor"></i></div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-card-content">
+              <div class="kpi-label">Caregivers Linked</div>
+              <div class="kpi-value">48</div>
+              <div class="kpi-trend"><i class="fa-solid fa-circle-check"></i> 96% Portal Engagement</div>
+            </div>
+            <div class="kpi-icon-wrap"><i class="fa-solid fa-hands-holding-child"></i></div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-card-content">
+              <div class="kpi-label">Adherence Rate</div>
+              <div class="kpi-value">96.8%</div>
+              <div class="kpi-trend"><i class="fa-solid fa-chart-line"></i> +2.4% vs last quarter</div>
+            </div>
+            <div class="kpi-icon-wrap"><i class="fa-solid fa-shield-heart"></i></div>
+          </div>
+        </div>
+
+        <!-- Panel 1: Patient Directory -->
+        <div class="dash-panel" style="margin-bottom: 1.5rem;">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">
+              <i class="fa-solid fa-hospital-user" style="color:var(--dash-primary);"></i> Active Patient Directory
+            </h3>
+            <span class="dash-panel-meta"><i class="fa-solid fa-lock" style="color:var(--dash-accent);"></i> NABH Safeguarded Records</span>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="dash-search-filter-bar">
+            <div class="dash-search-input-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" class="dash-search-input" id="search-patients" placeholder="Search patient name, ID, or condition...">
+            </div>
+            <select class="dash-filter-select" id="filter-patient-program">
+              <option value="">All Programs</option>
+              <option value="neuro">Neurological Rehab</option>
+              <option value="physical">Physical Rehab</option>
+              <option value="sports">Sports Injury</option>
+              <option value="occupational">Occupational & Speech</option>
+            </select>
+            <select class="dash-filter-select" id="filter-patient-status">
+              <option value="">All Care Stages</option>
+              <option value="phase1">Phase 1 • Acute Evaluation</option>
+              <option value="phase2">Phase 2 • Active Recovery</option>
+              <option value="phase3">Phase 3 • Community Transition</option>
+            </select>
+          </div>
+
           <div class="dash-table-wrapper">
-            <table class="dash-table">
+            <table class="dash-table" id="table-patients">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Primary Program</th>
-                  <th>Assigned Therapist</th>
-                  <th>Admission Date</th>
+                  <th>Patient</th>
+                  <th>Primary Condition / Program</th>
+                  <th>Assigned Specialist</th>
+                  <th>Care Stage & Progress</th>
+                  <th>Next Session</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>PAT-1082</td>
-                  <td>Anand R.</td>
-                  <td>Neurological Rehabilitation</td>
+                  <td><strong style="color:var(--dash-primary);">PAT-1082</strong></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-teal">AR</div>
+                      <div>
+                        <div class="patient-name">Anand Raman (58/M)</div>
+                        <div class="patient-contact"><i class="fa-solid fa-phone"></i> +91 94432-11029</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-brain"></i> Stroke Recovery (Hemiparesis)</span></td>
                   <td>Dr. Sarah Jenkins</td>
-                  <td>12 Jan 2026</td>
+                  <td>
+                    <div style="font-size:0.78rem; margin-bottom:0.25rem;">Phase 2 • Active Recovery</div>
+                    <div class="progress-track" style="height:6px; width:120px;"><div class="progress-bar-fill" style="width:72%;"></div></div>
+                  </td>
+                  <td><div class="slot-cell"><i class="fa-regular fa-calendar"></i> Tomorrow, 10:30 AM</div></td>
+                  <td><span class="status-badge status-completed"><span class="badge-dot"></span> In Therapy</span></td>
+                  <td>
+                    <button type="button" class="btn-action btn-action-outline btn-patient-chart" title="View Clinical Chart"><i class="fa-solid fa-file-medical"></i></button>
+                  </td>
                 </tr>
                 <tr>
-                  <td>PAT-1094</td>
-                  <td>Pooja K.</td>
-                  <td>Sports Injury Rehabilitation</td>
+                  <td><strong style="color:var(--dash-primary);">PAT-1094</strong></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-gold">PK</div>
+                      <div>
+                        <div class="patient-name">Pooja Krishnamurthy (29/F)</div>
+                        <div class="patient-contact"><i class="fa-solid fa-phone"></i> +91 98840-77123</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-person-running"></i> ACL Reconstruction Rehab</span></td>
                   <td>Dr. David Vance</td>
-                  <td>04 Feb 2026</td>
+                  <td>
+                    <div style="font-size:0.78rem; margin-bottom:0.25rem;">Phase 3 • Sports Agility</div>
+                    <div class="progress-track" style="height:6px; width:120px;"><div class="progress-bar-fill" style="width:88%;"></div></div>
+                  </td>
+                  <td><div class="slot-cell"><i class="fa-regular fa-calendar"></i> Friday, 09:00 AM</div></td>
+                  <td><span class="status-badge status-completed"><span class="badge-dot"></span> In Therapy</span></td>
+                  <td>
+                    <button type="button" class="btn-action btn-action-outline btn-patient-chart" title="View Clinical Chart"><i class="fa-solid fa-file-medical"></i></button>
+                  </td>
                 </tr>
                 <tr>
-                  <td>PAT-1102</td>
-                  <td>Meenakshi V. (Caregiver)</td>
-                  <td>Family Support Program</td>
+                  <td><strong style="color:var(--dash-primary);">PAT-1102</strong></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-mint">MV</div>
+                      <div>
+                        <div class="patient-name">Meenakshi V. (64/F)</div>
+                        <div class="patient-contact"><i class="fa-solid fa-phone"></i> +91 98401-44567</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-hand-holding-medical"></i> Parkinson's & ADL Training</span></td>
                   <td>Dr. Michael Chen</td>
-                  <td>18 Feb 2026</td>
+                  <td>
+                    <div style="font-size:0.78rem; margin-bottom:0.25rem;">Phase 1 • Motor Adaptation</div>
+                    <div class="progress-track" style="height:6px; width:120px;"><div class="progress-bar-fill" style="width:35%;"></div></div>
+                  </td>
+                  <td><div class="slot-cell"><i class="fa-regular fa-calendar"></i> Monday, 02:00 PM</div></td>
+                  <td><span class="status-badge status-pending"><span class="badge-dot"></span> Evaluation</span></td>
+                  <td>
+                    <button type="button" class="btn-action btn-action-outline btn-patient-chart" title="View Clinical Chart"><i class="fa-solid fa-file-medical"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="color:var(--dash-primary);">PAT-1115</strong></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-teal">RS</div>
+                      <div>
+                        <div class="patient-name">Rohan Sengupta (34/M)</div>
+                        <div class="patient-contact"><i class="fa-solid fa-phone"></i> +91 97412-33890</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-brain"></i> Traumatic Brain Injury Cognitive</span></td>
+                  <td>Dr. Sarah Jenkins</td>
+                  <td>
+                    <div style="font-size:0.78rem; margin-bottom:0.25rem;">Phase 2 • Cognitive Executive</div>
+                    <div class="progress-track" style="height:6px; width:120px;"><div class="progress-bar-fill" style="width:60%;"></div></div>
+                  </td>
+                  <td><div class="slot-cell"><i class="fa-regular fa-calendar"></i> Tomorrow, 03:00 PM</div></td>
+                  <td><span class="status-badge status-completed"><span class="badge-dot"></span> In Therapy</span></td>
+                  <td>
+                    <button type="button" class="btn-action btn-action-outline btn-patient-chart" title="View Clinical Chart"><i class="fa-solid fa-file-medical"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="color:var(--dash-primary);">PAT-1123</strong></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-gold">PS</div>
+                      <div>
+                        <div class="patient-name">Priya Swaminathan (42/F)</div>
+                        <div class="patient-contact"><i class="fa-solid fa-phone"></i> +91 94440-99211</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-bone"></i> Post-Spinal Fusion Recovery</span></td>
+                  <td>Dr. David Vance</td>
+                  <td>
+                    <div style="font-size:0.78rem; margin-bottom:0.25rem;">Phase 3 • Full Autonomy</div>
+                    <div class="progress-track" style="height:6px; width:120px;"><div class="progress-bar-fill" style="width:92%;"></div></div>
+                  </td>
+                  <td><div class="slot-cell"><i class="fa-regular fa-calendar"></i> Thursday, 11:30 AM</div></td>
+                  <td><span class="status-badge status-scheduled"><span class="badge-dot"></span> Discharge Prep</span></td>
+                  <td>
+                    <button type="button" class="btn-action btn-action-outline btn-patient-chart" title="View Clinical Chart"><i class="fa-solid fa-file-medical"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="color:var(--dash-primary);">PAT-1130</strong></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-mint">DN</div>
+                      <div>
+                        <div class="patient-name">Devraj Nambiar (68/M)</div>
+                        <div class="patient-contact"><i class="fa-solid fa-phone"></i> +91 98842-88102</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-comments"></i> Dysphagia & Speech Restoration</span></td>
+                  <td>Elena Rostova</td>
+                  <td>
+                    <div style="font-size:0.78rem; margin-bottom:0.25rem;">Phase 1 • Swallowing Baseline</div>
+                    <div class="progress-track" style="height:6px; width:120px;"><div class="progress-bar-fill" style="width:15%;"></div></div>
+                  </td>
+                  <td><div class="slot-cell"><i class="fa-regular fa-calendar"></i> Tomorrow, 04:30 PM</div></td>
+                  <td><span class="status-badge status-pending"><span class="badge-dot"></span> Pending Review</span></td>
+                  <td>
+                    <button type="button" class="btn-action btn-action-outline btn-patient-chart" title="View Clinical Chart"><i class="fa-solid fa-file-medical"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Panel 2: Clinical Specialist & Therapy Staff Grid -->
+        <div class="dash-panel" style="margin-bottom: 1.5rem;">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">
+              <i class="fa-solid fa-user-doctor" style="color:var(--dash-accent);"></i> Clinical Specialist & Staff Directory
+            </h3>
+            <span class="dash-panel-meta"><i class="fa-solid fa-circle-check" style="color:var(--dash-success);"></i> 6 On Duty Shift Today</span>
+          </div>
+
+          <div class="staff-grid">
+            <!-- Staff 1 -->
+            <div class="staff-card">
+              <div class="staff-card-header">
+                <div class="therapist-info-wrap">
+                  <div class="therapist-avatar is-online">SJ</div>
+                  <div>
+                    <div class="therapist-name">Dr. Sarah Jenkins</div>
+                    <div class="therapist-spec"><i class="fa-solid fa-brain" style="color:var(--dash-primary);"></i> Neurological Physiatrist</div>
+                  </div>
+                </div>
+                <span class="status-badge status-completed"><span class="badge-dot"></span> On Duty</span>
+              </div>
+              <div class="staff-badge-row">
+                <span><i class="fa-solid fa-door-open"></i> Neuro Suite 2</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-users"></i> 8 Patients</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-phone"></i> Ext #204</span>
+              </div>
+              <div class="staff-card-footer">
+                <span style="color:var(--dash-text-dim);">Shift: 08:00 AM – 04:00 PM</span>
+                <button type="button" class="btn btn-sm btn-outline btn-msg-staff" data-name="Dr. Jenkins"><i class="fa-regular fa-comment-dots"></i> Message</button>
+              </div>
+            </div>
+
+            <!-- Staff 2 -->
+            <div class="staff-card">
+              <div class="staff-card-header">
+                <div class="therapist-info-wrap">
+                  <div class="therapist-avatar is-busy avatar-gold">DV</div>
+                  <div>
+                    <div class="therapist-name">Dr. David Vance</div>
+                    <div class="therapist-spec"><i class="fa-solid fa-person-running" style="color:var(--dash-accent);"></i> Lead Sports & Musculoskeletal PT</div>
+                  </div>
+                </div>
+                <span class="status-badge status-pending"><span class="badge-dot"></span> In Session</span>
+              </div>
+              <div class="staff-badge-row">
+                <span><i class="fa-solid fa-door-open"></i> Active Gym A</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-users"></i> 11 Patients</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-phone"></i> Ext #208</span>
+              </div>
+              <div class="staff-card-footer">
+                <span style="color:var(--dash-text-dim);">Shift: 09:00 AM – 05:00 PM</span>
+                <button type="button" class="btn btn-sm btn-outline btn-msg-staff" data-name="Dr. Vance"><i class="fa-regular fa-comment-dots"></i> Message</button>
+              </div>
+            </div>
+
+            <!-- Staff 3 -->
+            <div class="staff-card">
+              <div class="staff-card-header">
+                <div class="therapist-info-wrap">
+                  <div class="therapist-avatar is-busy avatar-gold">MC</div>
+                  <div>
+                    <div class="therapist-name">Dr. Michael Chen</div>
+                    <div class="therapist-spec"><i class="fa-solid fa-hand-holding-medical" style="color:var(--dash-accent);"></i> Occupational Therapy Director</div>
+                  </div>
+                </div>
+                <span class="status-badge status-pending"><span class="badge-dot"></span> In Session</span>
+              </div>
+              <div class="staff-badge-row">
+                <span><i class="fa-solid fa-door-open"></i> OT Sensory Lab</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-users"></i> 7 Patients</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-phone"></i> Ext #212</span>
+              </div>
+              <div class="staff-card-footer">
+                <span style="color:var(--dash-text-dim);">Shift: 10:00 AM – 06:00 PM</span>
+                <button type="button" class="btn btn-sm btn-outline btn-msg-staff" data-name="Dr. Chen"><i class="fa-regular fa-comment-dots"></i> Message</button>
+              </div>
+            </div>
+
+            <!-- Staff 4 -->
+            <div class="staff-card">
+              <div class="staff-card-header">
+                <div class="therapist-info-wrap">
+                  <div class="therapist-avatar is-online">ER</div>
+                  <div>
+                    <div class="therapist-name">Elena Rostova</div>
+                    <div class="therapist-spec"><i class="fa-solid fa-comments" style="color:var(--dash-primary);"></i> Chief Speech Pathologist</div>
+                  </div>
+                </div>
+                <span class="status-badge status-completed"><span class="badge-dot"></span> On Duty</span>
+              </div>
+              <div class="staff-badge-row">
+                <span><i class="fa-solid fa-door-open"></i> Speech Rm 1</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-users"></i> 5 Patients</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-phone"></i> Ext #215</span>
+              </div>
+              <div class="staff-card-footer">
+                <span style="color:var(--dash-text-dim);">Shift: 08:30 AM – 04:30 PM</span>
+                <button type="button" class="btn btn-sm btn-outline btn-msg-staff" data-name="Elena"><i class="fa-regular fa-comment-dots"></i> Message</button>
+              </div>
+            </div>
+
+            <!-- Staff 5 -->
+            <div class="staff-card">
+              <div class="staff-card-header">
+                <div class="therapist-info-wrap">
+                  <div class="therapist-avatar is-online">PN</div>
+                  <div>
+                    <div class="therapist-name">Nurse Priya Nair</div>
+                    <div class="therapist-spec"><i class="fa-solid fa-notes-medical" style="color:var(--dash-primary);"></i> Clinical Intake Coordinator</div>
+                  </div>
+                </div>
+                <span class="status-badge status-completed"><span class="badge-dot"></span> On Duty</span>
+              </div>
+              <div class="staff-badge-row">
+                <span><i class="fa-solid fa-door-open"></i> Triage Desk B</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-inbox"></i> Intake Lead</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-phone"></i> Ext #101</span>
+              </div>
+              <div class="staff-card-footer">
+                <span style="color:var(--dash-text-dim);">Shift: 07:00 AM – 03:00 PM</span>
+                <button type="button" class="btn btn-sm btn-outline btn-msg-staff" data-name="Nurse Priya"><i class="fa-regular fa-comment-dots"></i> Message</button>
+              </div>
+            </div>
+
+            <!-- Staff 6 -->
+            <div class="staff-card">
+              <div class="staff-card-header">
+                <div class="therapist-info-wrap">
+                  <div class="therapist-avatar is-online">RK</div>
+                  <div>
+                    <div class="therapist-name">Rajesh Kumar</div>
+                    <div class="therapist-spec"><i class="fa-solid fa-person-swimming" style="color:var(--dash-accent);"></i> Lead Kinesiologist & Hydrotherapist</div>
+                  </div>
+                </div>
+                <span class="status-badge status-completed"><span class="badge-dot"></span> On Duty</span>
+              </div>
+              <div class="staff-badge-row">
+                <span><i class="fa-solid fa-door-open"></i> Aquatic Suite</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-users"></i> 9 Patients</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-phone"></i> Ext #220</span>
+              </div>
+              <div class="staff-card-footer">
+                <span style="color:var(--dash-text-dim);">Shift: 09:30 AM – 05:30 PM</span>
+                <button type="button" class="btn btn-sm btn-outline btn-msg-staff" data-name="Rajesh"><i class="fa-regular fa-comment-dots"></i> Message</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Caregiver Support Registry -->
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">
+              <i class="fa-solid fa-hands-holding-circle" style="color:var(--dash-primary);"></i> Caregiver Support & Education Registry
+            </h3>
+            <span class="dash-panel-meta">48 Registered Family Caregivers</span>
+          </div>
+          <div class="dash-table-wrapper">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>Caregiver Name</th>
+                  <th>Relationship</th>
+                  <th>Patient Assigned</th>
+                  <th>Primary Phone</th>
+                  <th>Preferred Channel</th>
+                  <th>Last Workshop Attended</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Meenakshi Raman</strong></td>
+                  <td>Spouse</td>
+                  <td>Anand Raman (PAT-1082)</td>
+                  <td>+91 94432-88120</td>
+                  <td><span class="status-badge status-scheduled"><i class="fa-brands fa-whatsapp"></i> WhatsApp</span></td>
+                  <td>Safe Home Transfers (10 Oct)</td>
+                  <td><span class="status-badge status-completed"><span class="badge-dot"></span> Certified</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Siddharth Krishnamurthy</strong></td>
+                  <td>Brother</td>
+                  <td>Pooja Krishnamurthy (PAT-1094)</td>
+                  <td>+91 98840-33211</td>
+                  <td><span class="status-badge status-scheduled"><i class="fa-solid fa-phone"></i> Phone Call</span></td>
+                  <td>Post-Surgical Home Safety (14 Oct)</td>
+                  <td><span class="status-badge status-completed"><span class="badge-dot"></span> Certified</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Kavitha Sengupta</strong></td>
+                  <td>Spouse</td>
+                  <td>Rohan Sengupta (PAT-1115)</td>
+                  <td>+91 97412-11002</td>
+                  <td><span class="status-badge status-scheduled"><i class="fa-brands fa-whatsapp"></i> WhatsApp</span></td>
+                  <td>Cognitive Caregiver Wellness (22 Sep)</td>
+                  <td><span class="status-badge status-pending"><span class="badge-dot"></span> Scheduled</span></td>
                 </tr>
               </tbody>
             </table>
@@ -484,41 +904,271 @@
            VIEW 3: APPOINTMENTS
            ========================================== -->
       <div id="view-appointments" class="dash-view-section" style="display:none;">
-        <div class="dash-panel">
-          <div class="dash-panel-header">
-            <h3 class="dash-panel-title">All Center Appointments</h3>
+        <div class="dash-header-action-row">
+          <div>
+            <h2 class="dash-panel-title" style="font-size:1.35rem; color:#FFFFFF;">
+              <i class="fa-regular fa-calendar-check" style="color:var(--dash-primary);"></i> Center Appointments & Clinical Scheduling
+            </h2>
+            <p style="color:var(--dash-text-muted); font-size:0.85rem; margin-top:0.25rem;">
+              Real-time regional patient scheduling, clinical room allocation, and telemedicine triage.
+            </p>
           </div>
-          <p style="color:var(--dash-text-muted); font-size:0.9rem;">
-            Upcoming, completed, and pending triage appointments across all 4 regional clinics.
-          </p>
+          <div class="dash-header-actions">
+            <button type="button" class="btn btn-sm btn-primary" id="btn-create-appt">
+              <i class="fa-solid fa-calendar-plus"></i> New Appointment
+            </button>
+            <button type="button" class="btn btn-sm btn-outline" id="btn-export-schedule">
+              <i class="fa-solid fa-file-pdf"></i> Daily Schedule (PDF)
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 KPI Cards -->
+        <div class="kpi-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem;">
+          <div class="kpi-card">
+            <div class="kpi-card-content">
+              <div class="kpi-label">Today's Sessions</div>
+              <div class="kpi-value">32</div>
+              <div class="kpi-trend"><i class="fa-solid fa-check"></i> 24 Completed • 8 Remaining</div>
+            </div>
+            <div class="kpi-icon-wrap"><i class="fa-regular fa-calendar-check"></i></div>
+          </div>
+
+          <div class="kpi-card kpi-accent">
+            <div class="kpi-card-content">
+              <div class="kpi-label">Room Utilization</div>
+              <div class="kpi-value">91.5%</div>
+              <div class="kpi-trend trend-accent"><i class="fa-solid fa-clock"></i> Peak hours: 09:00 - 13:00</div>
+            </div>
+            <div class="kpi-icon-wrap" style="color:var(--dash-accent); background:rgba(213,167,122,0.12);"><i class="fa-solid fa-door-open"></i></div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-card-content">
+              <div class="kpi-label">Telehealth Sessions</div>
+              <div class="kpi-value">6</div>
+              <div class="kpi-trend"><i class="fa-solid fa-video"></i> High-definition consultations</div>
+            </div>
+            <div class="kpi-icon-wrap"><i class="fa-solid fa-laptop-medical"></i></div>
+          </div>
+
+          <div class="kpi-card kpi-warning">
+            <div class="kpi-card-content">
+              <div class="kpi-label">Pending Triage</div>
+              <div class="kpi-value">3</div>
+              <div class="kpi-trend trend-warning"><i class="fa-solid fa-bell"></i> Requires coordinator review</div>
+            </div>
+            <div class="kpi-icon-wrap" style="color:var(--dash-warning); background:rgba(232,170,66,0.12);"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          </div>
+        </div>
+
+        <!-- Panel 1: Master Appointments Table -->
+        <div class="dash-panel" style="margin-bottom: 1.5rem;">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">
+              <i class="fa-solid fa-list-check" style="color:var(--dash-primary);"></i> Regional Appointment Schedule
+            </h3>
+            <span class="dash-panel-meta"><span class="pulse-dot"></span> Live Sync Across 4 Branches</span>
+          </div>
+
+          <!-- Filter Strip -->
+          <div class="dash-search-filter-bar">
+            <div class="dash-search-input-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" class="dash-search-input" id="search-appointments" placeholder="Search booking ID, patient, therapist...">
+            </div>
+            <select class="dash-filter-select" id="filter-appt-branch">
+              <option value="">All Branches</option>
+              <option value="blr">Bengaluru South Hub</option>
+              <option value="hyd">Hyderabad Hitec</option>
+              <option value="maa">Chennai OMR</option>
+              <option value="cbe">Coimbatore East</option>
+            </select>
+            <select class="dash-filter-select" id="filter-appt-status">
+              <option value="">All Statuses</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="pending">Pending Triage</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+
           <div class="dash-table-wrapper">
-            <table class="dash-table">
+            <table class="dash-table" id="table-appointments">
               <thead>
                 <tr>
                   <th>Booking ID</th>
                   <th>Date & Time</th>
-                  <th>Patient</th>
-                  <th>Specialty</th>
+                  <th>Patient & Phone</th>
+                  <th>Program / Specialty</th>
+                  <th>Specialist & Room</th>
+                  <th>Modality</th>
                   <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>STK-849201</td>
-                  <td>Tomorrow, 08:30 AM</td>
-                  <td>Vignesh Raman</td>
-                  <td>Neurological</td>
-                  <td><span class="status-badge status-pending">Pending Triage</span></td>
+                  <td><strong style="color:var(--dash-primary);">STK-849201</strong></td>
+                  <td><div class="slot-cell"><strong>Tomorrow, 08:30 AM</strong><br><small style="color:var(--dash-text-dim);">Bengaluru South</small></div></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-teal">VR</div>
+                      <div>
+                        <div class="patient-name">Vignesh Raman</div>
+                        <div class="patient-contact">+91 94432-11029</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-brain"></i> Neurological Rehab</span></td>
+                  <td>Dr. Sarah Jenkins<br><small style="color:var(--dash-text-dim);">Neuro Suite 2</small></td>
+                  <td><span class="program-pill"><i class="fa-solid fa-hospital"></i> In-Clinic</span></td>
+                  <td class="status-col"><span class="status-badge status-pending"><span class="badge-dot"></span> Pending Triage</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button type="button" class="btn-action btn-action-primary btn-accept-request" title="Confirm Booking"><i class="fa-solid fa-check"></i></button>
+                      <button type="button" class="btn-action btn-action-outline btn-reschedule-request" title="Reschedule"><i class="fa-regular fa-clock"></i></button>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
-                  <td>STK-849188</td>
-                  <td>Tomorrow, 10:00 AM</td>
-                  <td>Sangeetha K.</td>
-                  <td>Physical Rehabilitation</td>
-                  <td><span class="status-badge status-scheduled">Confirmed</span></td>
+                  <td><strong style="color:var(--dash-primary);">STK-849188</strong></td>
+                  <td><div class="slot-cell"><strong>Tomorrow, 10:00 AM</strong><br><small style="color:var(--dash-text-dim);">Bengaluru South</small></div></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-gold">SK</div>
+                      <div>
+                        <div class="patient-name">Sangeetha K.</div>
+                        <div class="patient-contact">+91 98840-55219</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-bone"></i> Physical Rehabilitation</span></td>
+                  <td>Dr. David Vance<br><small style="color:var(--dash-text-dim);">Active Gym A</small></td>
+                  <td><span class="program-pill"><i class="fa-solid fa-hospital"></i> In-Clinic</span></td>
+                  <td class="status-col"><span class="status-badge status-scheduled"><span class="badge-dot"></span> Confirmed</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button type="button" class="btn-action btn-action-primary btn-checkin" title="Check-In Patient"><i class="fa-solid fa-user-check"></i></button>
+                      <button type="button" class="btn-action btn-action-outline btn-reschedule-request" title="Reschedule"><i class="fa-regular fa-clock"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="color:var(--dash-primary);">STK-849175</strong></td>
+                  <td><div class="slot-cell"><strong>Tomorrow, 11:30 AM</strong><br><small style="color:var(--dash-text-dim);">Hyderabad Hitec</small></div></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-mint">RN</div>
+                      <div>
+                        <div class="patient-name">Rajesh Narayanan</div>
+                        <div class="patient-contact">+91 97890-44123</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-laptop-medical"></i> Remote OT Consult</span></td>
+                  <td>Dr. Michael Chen<br><small style="color:var(--dash-text-dim);">Virtual Suite 1</small></td>
+                  <td><span class="program-pill" style="color:var(--dash-accent); border-color:rgba(213,167,122,0.3);"><i class="fa-solid fa-video"></i> Telehealth HD</span></td>
+                  <td class="status-col"><span class="status-badge status-scheduled"><span class="badge-dot"></span> Confirmed</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button type="button" class="btn-action btn-action-primary btn-launch-telehealth" title="Launch Video Call"><i class="fa-solid fa-video"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="color:var(--dash-primary);">STK-849162</strong></td>
+                  <td><div class="slot-cell"><strong>Tomorrow, 02:00 PM</strong><br><small style="color:var(--dash-text-dim);">Chennai OMR</small></div></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-teal">DS</div>
+                      <div>
+                        <div class="patient-name">Deepa Sundaram</div>
+                        <div class="patient-contact">+91 98402-11984</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-comments"></i> Speech & Dysphagia</span></td>
+                  <td>Elena Rostova<br><small style="color:var(--dash-text-dim);">Speech Rm 1</small></td>
+                  <td><span class="program-pill"><i class="fa-solid fa-hospital"></i> In-Clinic</span></td>
+                  <td class="status-col"><span class="status-badge status-scheduled"><span class="badge-dot"></span> Confirmed</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button type="button" class="btn-action btn-action-primary btn-checkin" title="Check-In Patient"><i class="fa-solid fa-user-check"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="color:var(--dash-primary);">STK-849150</strong></td>
+                  <td><div class="slot-cell"><strong>Tomorrow, 03:30 PM</strong><br><small style="color:var(--dash-text-dim);">Coimbatore East</small></div></td>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="patient-avatar-mini patient-avatar-gold">KS</div>
+                      <div>
+                        <div class="patient-name">Karthik Selvan</div>
+                        <div class="patient-contact">+91 97910-88421</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="program-pill"><i class="fa-solid fa-person-running"></i> Sports Agility Testing</span></td>
+                  <td>Dr. David Vance<br><small style="color:var(--dash-text-dim);">Gym Suite B</small></td>
+                  <td><span class="program-pill"><i class="fa-solid fa-hospital"></i> In-Clinic</span></td>
+                  <td class="status-col"><span class="status-badge status-scheduled"><span class="badge-dot"></span> Confirmed</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button type="button" class="btn-action btn-action-primary btn-checkin" title="Check-In Patient"><i class="fa-solid fa-user-check"></i></button>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- Panel 2: Therapy Room Allocation Matrix -->
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">
+              <i class="fa-solid fa-door-open" style="color:var(--dash-accent);"></i> Facility Room Utilization & Therapy Capacity
+            </h3>
+            <span class="dash-panel-meta">Bengaluru Hub Hourly Allocation</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem;">
+            <div style="background:rgba(19, 34, 30, 0.65); border:1px solid var(--dash-border-subtle); padding:1.25rem; border-radius:var(--radius-md);">
+              <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.85rem;">
+                <strong>Active Gym A</strong>
+                <span style="color:var(--dash-primary); font-weight:700;">6/6 Booked (100%)</span>
+              </div>
+              <div class="progress-track"><div class="progress-bar-fill" style="width:100%;"></div></div>
+              <small style="color:var(--dash-text-dim); display:block; margin-top:0.5rem;">Sports PT & Kinetic Loading</small>
+            </div>
+
+            <div style="background:rgba(19, 34, 30, 0.65); border:1px solid var(--dash-border-subtle); padding:1.25rem; border-radius:var(--radius-md);">
+              <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.85rem;">
+                <strong>Neuro Suite 2</strong>
+                <span style="color:var(--dash-accent); font-weight:700;">5/6 Booked (83%)</span>
+              </div>
+              <div class="progress-track"><div class="progress-bar-fill" style="width:83%;"></div></div>
+              <small style="color:var(--dash-text-dim); display:block; margin-top:0.5rem;">ZeroG Bodyweight Support System</small>
+            </div>
+
+            <div style="background:rgba(19, 34, 30, 0.65); border:1px solid var(--dash-border-subtle); padding:1.25rem; border-radius:var(--radius-md);">
+              <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.85rem;">
+                <strong>OT Sensory Lab</strong>
+                <span style="color:var(--dash-primary); font-weight:700;">4/6 Booked (67%)</span>
+              </div>
+              <div class="progress-track"><div class="progress-bar-fill" style="width:67%;"></div></div>
+              <small style="color:var(--dash-text-dim); display:block; margin-top:0.5rem;">Activities of Daily Living Simulator</small>
+            </div>
+
+            <div style="background:rgba(19, 34, 30, 0.65); border:1px solid var(--dash-border-subtle); padding:1.25rem; border-radius:var(--radius-md);">
+              <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.85rem;">
+                <strong>Hydrotherapy Suite</strong>
+                <span style="color:var(--dash-primary); font-weight:700;">3/4 Booked (75%)</span>
+              </div>
+              <div class="progress-track"><div class="progress-bar-fill" style="width:75%;"></div></div>
+              <small style="color:var(--dash-text-dim); display:block; margin-top:0.5rem;">Aquatic Decompression Pool</small>
+            </div>
           </div>
         </div>
       </div>
@@ -527,29 +1177,240 @@
            VIEW 4: PROGRAMS & REPORTS
            ========================================== -->
       <div id="view-programs-reports" class="dash-view-section" style="display:none;">
+        <div class="dash-header-action-row">
+          <div>
+            <h2 class="dash-panel-title" style="font-size:1.35rem; color:#FFFFFF;">
+              <i class="fa-solid fa-chart-line" style="color:var(--dash-primary);"></i> Clinical Programs & Operational Reports
+            </h2>
+            <p style="color:var(--dash-text-muted); font-size:0.85rem; margin-top:0.25rem;">
+              Outcome analytics, clinical recovery benchmarks, and regulatory audit documentation.
+            </p>
+          </div>
+          <div class="dash-header-actions">
+            <button type="button" class="btn btn-sm btn-primary" id="btn-custom-report">
+              <i class="fa-solid fa-chart-pie"></i> Custom Analysis
+            </button>
+            <button type="button" class="btn btn-sm btn-outline" id="btn-export-audit-pack">
+              <i class="fa-solid fa-file-pdf"></i> Download Audit Pack
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Program Cards -->
+        <div class="dash-panel" style="margin-bottom: 1.5rem;">
+          <div class="dash-panel-header">
+            <h3 class="dash-panel-title">
+              <i class="fa-solid fa-stethoscope" style="color:var(--dash-accent);"></i> Program Utilization & Patient Enrollment
+            </h3>
+            <span class="dash-panel-meta">186 Total Patients Across All Pathways</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.25rem;">
+            <!-- Program 1 -->
+            <div style="background:rgba(19, 34, 30, 0.65); border:1px solid var(--dash-border-subtle); padding:1.25rem; border-radius:var(--radius-md);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span class="program-pill"><i class="fa-solid fa-bone"></i> Physical Rehab</span>
+                <span style="color:var(--dash-primary); font-weight:700;">42% Share</span>
+              </div>
+              <strong style="font-size:1.6rem; color:#FFFFFF; display:block; margin:0.35rem 0;">78 Patients</strong>
+              <div class="progress-track" style="margin:0.5rem 0;"><div class="progress-bar-fill" style="width:42%;"></div></div>
+              <div style="font-size:0.78rem; color:var(--dash-text-muted); display:flex; justify-content:space-between; margin-top:0.5rem;">
+                <span>Avg Stay: 8.2 wks</span>
+                <span style="color:var(--dash-success);"><i class="fa-solid fa-check"></i> 96% Goals Met</span>
+              </div>
+            </div>
+
+            <!-- Program 2 -->
+            <div style="background:rgba(19, 34, 30, 0.65); border:1px solid var(--dash-border-subtle); padding:1.25rem; border-radius:var(--radius-md);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span class="program-pill"><i class="fa-solid fa-brain"></i> Neuro Rehab</span>
+                <span style="color:var(--dash-accent); font-weight:700;">28% Share</span>
+              </div>
+              <strong style="font-size:1.6rem; color:#FFFFFF; display:block; margin:0.35rem 0;">52 Patients</strong>
+              <div class="progress-track" style="margin:0.5rem 0;"><div class="progress-bar-fill" style="width:28%; background:var(--dash-accent);"></div></div>
+              <div style="font-size:0.78rem; color:var(--dash-text-muted); display:flex; justify-content:space-between; margin-top:0.5rem;">
+                <span>Avg Stay: 14.5 wks</span>
+                <span style="color:var(--dash-success);"><i class="fa-solid fa-check"></i> 89% Mobility Gain</span>
+              </div>
+            </div>
+
+            <!-- Program 3 -->
+            <div style="background:rgba(19, 34, 30, 0.65); border:1px solid var(--dash-border-subtle); padding:1.25rem; border-radius:var(--radius-md);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span class="program-pill"><i class="fa-solid fa-hand-holding-medical"></i> OT & Speech</span>
+                <span style="color:var(--dash-text); font-weight:700;">18% Share</span>
+              </div>
+              <strong style="font-size:1.6rem; color:#FFFFFF; display:block; margin:0.35rem 0;">34 Patients</strong>
+              <div class="progress-track" style="margin:0.5rem 0;"><div class="progress-bar-fill" style="width:18%;"></div></div>
+              <div style="font-size:0.78rem; color:var(--dash-text-muted); display:flex; justify-content:space-between; margin-top:0.5rem;">
+                <span>Avg Stay: 9.0 wks</span>
+                <span style="color:var(--dash-success);"><i class="fa-solid fa-check"></i> 94% Autonomy</span>
+              </div>
+            </div>
+
+            <!-- Program 4 -->
+            <div style="background:rgba(19, 34, 30, 0.65); border:1px solid var(--dash-border-subtle); padding:1.25rem; border-radius:var(--radius-md);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span class="program-pill"><i class="fa-solid fa-person-running"></i> Sports Recond.</span>
+                <span style="color:var(--dash-primary); font-weight:700;">12% Share</span>
+              </div>
+              <strong style="font-size:1.6rem; color:#FFFFFF; display:block; margin:0.35rem 0;">22 Patients</strong>
+              <div class="progress-track" style="margin:0.5rem 0;"><div class="progress-bar-fill" style="width:12%;"></div></div>
+              <div style="font-size:0.78rem; color:var(--dash-text-muted); display:flex; justify-content:space-between; margin-top:0.5rem;">
+                <span>Avg Stay: 6.8 wks</span>
+                <span style="color:var(--dash-success);"><i class="fa-solid fa-check"></i> 98% Cleared</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-Column Split: Clinical Recovery Curve & Regional Performance -->
+        <div class="dash-panel-grid-half" style="margin-bottom: 1.5rem;">
+          <!-- Panel: Clinical Outcome Metrics -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-heart-pulse" style="color:var(--dash-primary);"></i> Functional Recovery Indicators
+              </h3>
+              <span class="dash-panel-meta">Q1 2026 Cohort</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:1.15rem;">
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.35rem;">
+                  <span>FIM (Functional Independence Measure) Gain</span>
+                  <strong style="color:var(--dash-primary);">+18.4 pts avg</strong>
+                </div>
+                <div class="progress-track"><div class="progress-bar-fill" style="width:84%;"></div></div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.35rem;">
+                  <span>Pain Scale Reduction (VAS Score)</span>
+                  <strong style="color:var(--dash-accent);">-64.2% drop</strong>
+                </div>
+                <div class="progress-track"><div class="progress-bar-fill" style="width:76%; background:var(--dash-accent);"></div></div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.35rem;">
+                  <span>Independent Ambulation Upon Discharge</span>
+                  <strong style="color:var(--dash-success);">88.7% achieved</strong>
+                </div>
+                <div class="progress-track"><div class="progress-bar-fill" style="width:88.7%; background:var(--dash-success);"></div></div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.35rem;">
+                  <span>Zero 30-Day Hospital Readmission Rate</span>
+                  <strong style="color:var(--dash-primary);">98.5% safe transition</strong>
+                </div>
+                <div class="progress-track"><div class="progress-bar-fill" style="width:98.5%;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel: Regional Clinic Comparison -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-location-dot" style="color:var(--dash-accent);"></i> Regional Center Performance
+              </h3>
+              <span class="dash-panel-meta">4 Centers</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:0.95rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.75rem 0.9rem; background:rgba(19, 34, 30, 0.65); border-radius:var(--radius-sm); border:1px solid var(--dash-border-subtle);">
+                <div>
+                  <strong style="font-size:0.9rem; color:#FFFFFF;">Bengaluru South Hub</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">88 Patients • 94% Capacity</div>
+                </div>
+                <span class="status-badge status-completed"><i class="fa-solid fa-star"></i> 4.9 Rating</span>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.75rem 0.9rem; background:rgba(19, 34, 30, 0.65); border-radius:var(--radius-sm); border:1px solid var(--dash-border-subtle);">
+                <div>
+                  <strong style="font-size:0.9rem; color:#FFFFFF;">Hyderabad Hitec</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">46 Patients • 85% Capacity</div>
+                </div>
+                <span class="status-badge status-completed"><i class="fa-solid fa-star"></i> 4.8 Rating</span>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.75rem 0.9rem; background:rgba(19, 34, 30, 0.65); border-radius:var(--radius-sm); border:1px solid var(--dash-border-subtle);">
+                <div>
+                  <strong style="font-size:0.9rem; color:#FFFFFF;">Chennai OMR Center</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">32 Patients • 78% Capacity</div>
+                </div>
+                <span class="status-badge status-completed"><i class="fa-solid fa-star"></i> 4.9 Rating</span>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.75rem 0.9rem; background:rgba(19, 34, 30, 0.65); border-radius:var(--radius-sm); border:1px solid var(--dash-border-subtle);">
+                <div>
+                  <strong style="font-size:0.9rem; color:#FFFFFF;">Coimbatore East Clinic</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">20 Patients • 72% Capacity</div>
+                </div>
+                <span class="status-badge status-completed"><i class="fa-solid fa-star"></i> 4.8 Rating</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Downloadable Audit & Clinical Reports -->
         <div class="dash-panel">
           <div class="dash-panel-header">
-            <h3 class="dash-panel-title">Program Management & Clinical Utilization</h3>
+            <h3 class="dash-panel-title">
+              <i class="fa-solid fa-file-shield" style="color:var(--dash-primary);"></i> Regulatory & Clinical Audit Reports
+            </h3>
+            <span class="dash-panel-meta">Certified NABH Documentation</span>
           </div>
-          <p style="color:var(--dash-text-muted); font-size:0.9rem;">
-            Aggregated utilization statistics across physical, neurological, occupational, speech, and athletic rehabilitation programs.
-          </p>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-top:1.5rem;">
-            <div style="background:var(--dash-surface); padding:1.25rem; border-radius:8px;">
-              <div style="font-size:0.8rem; color:var(--dash-text-muted);">Physical Rehab</div>
-              <strong style="font-size:1.5rem; color:var(--dash-primary);">42% Active</strong>
+
+          <div class="reports-list">
+            <!-- Report 1 -->
+            <div class="report-item-card">
+              <div class="report-info">
+                <div class="report-icon-box"><i class="fa-solid fa-file-pdf"></i></div>
+                <div>
+                  <strong style="font-size:0.92rem; color:#FFFFFF;">Monthly NABH Clinical Safety & Infection Control Audit</strong>
+                  <div style="font-size:0.78rem; color:var(--dash-text-muted);">Comprehensive sterilisation log, emergency equipment calibration, and incident zero-report.</div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline btn-download-report" data-title="NABH Safety Audit"><i class="fa-solid fa-download"></i> Download PDF (2.8 MB)</button>
             </div>
-            <div style="background:var(--dash-surface); padding:1.25rem; border-radius:8px;">
-              <div style="font-size:0.8rem; color:var(--dash-text-muted);">Neuro Rehab</div>
-              <strong style="font-size:1.5rem; color:var(--dash-accent);">28% Active</strong>
+
+            <!-- Report 2 -->
+            <div class="report-item-card">
+              <div class="report-info">
+                <div class="report-icon-box gold"><i class="fa-solid fa-file-csv"></i></div>
+                <div>
+                  <strong style="font-size:0.92rem; color:#FFFFFF;">Multi-Branch Therapist Productivity & Billing Efficiency Log</strong>
+                  <div style="font-size:0.78rem; color:var(--dash-text-muted);">Session hours, one-on-one therapy ratios, and clinical utilization per specialist.</div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline btn-download-report" data-title="Productivity Log"><i class="fa-solid fa-download"></i> Download CSV (780 KB)</button>
             </div>
-            <div style="background:var(--dash-surface); padding:1.25rem; border-radius:8px;">
-              <div style="font-size:0.8rem; color:var(--dash-text-muted);">Occupational & Speech</div>
-              <strong style="font-size:1.5rem; color:var(--dash-text);">18% Active</strong>
+
+            <!-- Report 3 -->
+            <div class="report-item-card">
+              <div class="report-info">
+                <div class="report-icon-box"><i class="fa-solid fa-file-pdf"></i></div>
+                <div>
+                  <strong style="font-size:0.92rem; color:#FFFFFF;">Hydrotherapy Water Purity & Pool Safety Assessment</strong>
+                  <div style="font-size:0.78rem; color:var(--dash-text-muted);">Microbiological water testing, temperature logs, and accessible lift inspection.</div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline btn-download-report" data-title="Hydrotherapy Safety"><i class="fa-solid fa-download"></i> Download PDF (1.4 MB)</button>
             </div>
-            <div style="background:var(--dash-surface); padding:1.25rem; border-radius:8px;">
-              <div style="font-size:0.8rem; color:var(--dash-text-muted);">Sports Reconditioning</div>
-              <strong style="font-size:1.5rem; color:var(--dash-primary);">12% Active</strong>
+
+            <!-- Report 4 -->
+            <div class="report-item-card">
+              <div class="report-info">
+                <div class="report-icon-box gold"><i class="fa-solid fa-file-waveform"></i></div>
+                <div>
+                  <strong style="font-size:0.92rem; color:#FFFFFF;">Annual Patient Functional Independence (FIM) Cohort Study</strong>
+                  <div style="font-size:0.78rem; color:var(--dash-text-muted);">De-identified longitudinal recovery trajectory curves across stroke and orthopedic populations.</div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline btn-download-report" data-title="FIM Recovery Study"><i class="fa-solid fa-download"></i> Download PDF (4.2 MB)</button>
             </div>
           </div>
         </div>
@@ -559,19 +1420,180 @@
            VIEW 5: SETTINGS
            ========================================== -->
       <div id="view-settings" class="dash-view-section" style="display:none;">
-        <div class="dash-panel" style="max-width:680px;">
-          <div class="dash-panel-header">
-            <h3 class="dash-panel-title">Center Administration Settings</h3>
+        <div class="dash-header-action-row">
+          <div>
+            <h2 class="dash-panel-title" style="font-size:1.35rem; color:#FFFFFF;">
+              <i class="fa-solid fa-gear" style="color:var(--dash-primary);"></i> Center Administration & Clinical Protocols
+            </h2>
+            <p style="color:var(--dash-text-muted); font-size:0.85rem; margin-top:0.25rem;">
+              Regional cluster preferences, automated communication rules, staff access security, and cloud backup.
+            </p>
           </div>
-          <div style="display:flex; flex-direction:column; gap:1.25rem;">
-            <div>
-              <label class="form-label" style="color:var(--dash-text);">Center Regional Hub</label>
-              <input type="text" class="form-control" value="STACKLY Rehabilitation - South India Regional Cluster" readonly style="background:var(--dash-surface); color:var(--dash-text); border-color:var(--dash-border);">
+          <div class="dash-header-actions">
+            <button type="button" class="btn btn-sm btn-primary" id="btn-save-settings">
+              <i class="fa-solid fa-floppy-disk"></i> Save Settings
+            </button>
+            <button type="button" class="btn btn-sm btn-outline" id="btn-reset-settings">
+              <i class="fa-solid fa-rotate-left"></i> Reset Defaults
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-grid">
+          <!-- Card 1: Regional Center Profile -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-hospital" style="color:var(--dash-primary);"></i> Regional Center Profile
+              </h3>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              <div>
+                <label class="form-label" style="color:var(--dash-text); font-size:0.82rem;">Center Regional Cluster Name</label>
+                <input type="text" class="form-control" value="STACKLY South Regional Rehabilitation Cluster" style="background:var(--dash-surface); color:var(--dash-text); border-color:var(--dash-border);">
+              </div>
+              <div>
+                <label class="form-label" style="color:var(--dash-text); font-size:0.82rem;">Primary Clinical Inquiries Line</label>
+                <input type="text" class="form-control" value="+91 (080) 4567-8901" style="background:var(--dash-surface); color:var(--dash-text); border-color:var(--dash-border);">
+              </div>
+              <div>
+                <label class="form-label" style="color:var(--dash-text); font-size:0.82rem;">Emergency On-Call Physician Line</label>
+                <input type="text" class="form-control" value="+91 (080) 4567-8999" style="background:var(--dash-surface); color:var(--dash-text); border-color:var(--dash-border);">
+              </div>
+              <div>
+                <label class="form-label" style="color:var(--dash-text); font-size:0.82rem;">Operating Hours Description</label>
+                <input type="text" class="form-control" value="Mon-Fri: 07:00 – 20:00 | Sat: 08:00 – 17:00" style="background:var(--dash-surface); color:var(--dash-text); border-color:var(--dash-border);">
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Automated Clinical Protocols -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-bolt" style="color:var(--dash-accent);"></i> Automated Clinical Protocols
+              </h3>
             </div>
             <div>
-              <label class="form-label" style="color:var(--dash-text);">Automated Physician Notification</label>
-              <p style="font-size:0.85rem; color:var(--dash-text-muted);">Transmit bi-weekly clinical progress summaries to referring physiatrists upon patient consent.</p>
-              <button type="button" class="btn btn-sm btn-primary">Enabled</button>
+              <div class="toggle-switch-wrap">
+                <div>
+                  <strong style="font-size:0.88rem; color:#FFFFFF;">Smart Clinician Triage Routing</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">Automatically route intake requests to the appropriate specialist based on ICD protocol.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-switch-wrap">
+                <div>
+                  <strong style="font-size:0.88rem; color:#FFFFFF;">WhatsApp & SMS Reminders</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">Send automated reminders to patients 24 hours and 2 hours before therapy sessions.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-switch-wrap">
+                <div>
+                  <strong style="font-size:0.88rem; color:#FFFFFF;">Caregiver Bi-Weekly Reports</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">Transmit clinical progress summaries and home exercises to designated family member.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-switch-wrap">
+                <div>
+                  <strong style="font-size:0.88rem; color:#FFFFFF;">Referring Physiatrist Progress CC</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">Securely transmit milestone summaries to external referring medical doctors.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Security & Role Permissions -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-shield-halved" style="color:var(--dash-primary);"></i> Staff Access & Compliance
+              </h3>
+            </div>
+            <div>
+              <div class="toggle-switch-wrap">
+                <div>
+                  <strong style="font-size:0.88rem; color:#FFFFFF;">Enforce Two-Factor Authentication</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">Mandatory OTP verification for all physicians, therapists, and billing staff.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-switch-wrap">
+                <div>
+                  <strong style="font-size:0.88rem; color:#FFFFFF;">Automatic Inactivity Session Timeout</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">Lock clinical terminals after 30 minutes of idle time to safeguard health records.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-switch-wrap">
+                <div>
+                  <strong style="font-size:0.88rem; color:#FFFFFF;">Full Audit Logging</strong>
+                  <div style="font-size:0.76rem; color:var(--dash-text-muted);">Maintain immutable access trails for every patient chart access for 7 years.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Encrypted Cloud Storage & Backup -->
+          <div class="dash-panel">
+            <div class="dash-panel-header">
+              <h3 class="dash-panel-title">
+                <i class="fa-solid fa-cloud" style="color:var(--dash-accent);"></i> Database Backup & Cloud Storage
+              </h3>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.35rem;">
+                  <span>Storage Vault Utilization</span>
+                  <strong style="color:var(--dash-primary);">18.4 GB / 500 GB</strong>
+                </div>
+                <div class="progress-track"><div class="progress-bar-fill" style="width:14%;"></div></div>
+              </div>
+
+              <div style="background:rgba(19, 34, 30, 0.65); padding:0.85rem; border-radius:var(--radius-sm); border:1px solid var(--dash-border-subtle); font-size:0.8rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.25rem;">
+                  <span style="color:var(--dash-text-muted);">Last Cloud Backup:</span>
+                  <strong style="color:var(--dash-success);"><i class="fa-solid fa-circle-check"></i> Today, 03:00 AM</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span style="color:var(--dash-text-muted);">Backup Engine:</span>
+                  <span>AES-256 Multi-Region Replication</span>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-primary btn-sm" id="btn-manual-backup" style="width:100%; justify-content:center;">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Run Manual Backup Now
+              </button>
             </div>
           </div>
         </div>
