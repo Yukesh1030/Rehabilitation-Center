@@ -8,7 +8,49 @@ document.addEventListener('DOMContentLoaded', () => {
   initPatientSidebar();
   initMilestoneToggles();
   initRescheduleDemo();
+  initPatientAppointments();
+  initPatientRecoveryPlan();
+  initPatientResources();
+  initPatientSupport();
+
+  // Route URL hash on initial page load
+  handleUrlHash();
 });
+
+// URL Hash Routing Support
+function handleUrlHash() {
+  const hash = window.location.hash || '#dashboard';
+  const hashMap = {
+    '#dashboard': 'view-patient-dash',
+    '#appointments': 'view-patient-appts',
+    '#recovery-plan': 'view-patient-plan',
+    '#progress-resources': 'view-patient-resources',
+    '#support': 'view-patient-support'
+  };
+
+  const targetViewId = hashMap[hash];
+  if (!targetViewId) return;
+
+  const targetView = document.getElementById(targetViewId);
+  const targetLink = document.querySelector(`.dash-nav-item a[href="${hash}"]`);
+
+  if (targetView) {
+    document.querySelectorAll('.dash-view-section').forEach(v => {
+      v.style.display = 'none';
+    });
+    targetView.style.display = 'block';
+
+    if (targetLink) {
+      document.querySelectorAll('.dash-nav-item a').forEach(l => l.classList.remove('active'));
+      targetLink.classList.add('active');
+    }
+
+    // Scroll to top of content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+window.addEventListener('hashchange', handleUrlHash);
 
 // Helper: Format friendly display name from email address
 function formatNameFromEmail(email) {
@@ -78,7 +120,6 @@ function initSidebarBrandLogo() {
   if (!brandLink) return;
 
   const role = (localStorage.getItem('stackly_user_role') || '').toLowerCase();
-  // Role of login: Admin -> AdminDashboard.html, Client/Patient -> PatientDashboard.html
   const targetDashboard = role === 'admin' ? 'AdminDashboard.html' : 'PatientDashboard.html';
   brandLink.setAttribute('href', targetDashboard);
   brandLink.setAttribute('aria-label', `Go to ${role === 'admin' ? 'Admin' : 'Patient'} Dashboard`);
@@ -87,8 +128,7 @@ function initSidebarBrandLogo() {
     const currentPath = window.location.pathname.split('/').pop().toLowerCase();
     if (currentPath === targetDashboard.toLowerCase()) {
       e.preventDefault();
-      const defaultNavLink = document.querySelector('.dash-nav-item a[data-view="view-patient-dash"]');
-      if (defaultNavLink) defaultNavLink.click();
+      window.location.hash = '#dashboard';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
@@ -118,19 +158,13 @@ function initPatientSidebar() {
   overlay.addEventListener('click', () => toggle(false));
 
   const menuLinks = document.querySelectorAll('.dash-nav-item a');
-  const views = document.querySelectorAll('.dash-view-section');
 
   menuLinks.forEach(link => {
     link.addEventListener('click', (e) => {
-      const targetView = link.getAttribute('data-view');
-      if (targetView && document.getElementById(targetView)) {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
         e.preventDefault();
-        menuLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-
-        views.forEach(v => v.style.display = 'none');
-        document.getElementById(targetView).style.display = 'block';
-
+        window.location.hash = href;
         if (window.innerWidth <= 860) {
           toggle(false);
         }
@@ -191,7 +225,9 @@ function initMilestoneToggles() {
   checkboxes.forEach(cb => {
     cb.addEventListener('change', () => {
       updateMilestones();
-      window.showToast('Milestone tracking updated.', 'info');
+      if (window.showToast) {
+        window.showToast('Milestone tracking updated.', 'info');
+      }
     });
   });
 
@@ -206,4 +242,193 @@ function initRescheduleDemo() {
   rescheduleBtn.addEventListener('click', () => {
     window.location.href = 'appointments.html';
   });
+}
+
+// ============================================================================
+// PATIENT APPOINTMENTS INTERACTION
+// ============================================================================
+function initPatientAppointments() {
+  const searchInput = document.getElementById('patient-appt-search');
+  const filterSelect = document.getElementById('patient-appt-filter');
+  const apptRows = document.querySelectorAll('#table-patient-appts tbody tr');
+
+  function filterAppointments() {
+    const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    const filter = (filterSelect ? filterSelect.value : 'all').toLowerCase();
+
+    apptRows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      const statusAttr = (row.getAttribute('data-status') || '').toLowerCase();
+
+      const matchesSearch = !query || text.includes(query);
+      let matchesFilter = true;
+
+      if (filter === 'upcoming') {
+        matchesFilter = statusAttr.includes('upcoming');
+      } else if (filter === 'attended') {
+        matchesFilter = statusAttr.includes('attended');
+      } else if (filter === 'telehealth') {
+        matchesFilter = statusAttr.includes('telehealth');
+      }
+
+      row.style.display = matchesSearch && matchesFilter ? '' : 'none';
+    });
+  }
+
+  if (searchInput) searchInput.addEventListener('input', filterAppointments);
+  if (filterSelect) filterSelect.addEventListener('change', filterAppointments);
+
+  // Export Calendar (.ics)
+  const exportBtn = document.getElementById('btn-patient-export-cal');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      if (window.showToast) {
+        window.showToast('Downloading therapy appointment calendar (.ics)...', 'info');
+      }
+    });
+  }
+
+  // Reschedule Action
+  document.querySelectorAll('.btn-patient-resched-action').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const reason = prompt('Please specify your preferred date or reason for reschedule:');
+      if (reason) {
+        if (window.showToast) {
+          window.showToast('Reschedule request submitted. Concierge will confirm within 2 hours.', 'success');
+        }
+      }
+    });
+  });
+
+  // Map / Directions
+  document.querySelectorAll('.btn-patient-directions').forEach(btn => {
+    btn.addEventListener('click', () => {
+      window.open('https://maps.google.com/?q=STACKLY+Rehabilitation+Bengaluru', '_blank');
+    });
+  });
+
+  // Join Telehealth Video
+  document.querySelectorAll('.btn-patient-join-video').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (window.showToast) {
+        window.showToast('Connecting to encrypted telehealth room with Dr. Rajiv Menon...', 'info');
+      }
+    });
+  });
+
+  // View Clinical Notes
+  document.querySelectorAll('.btn-patient-view-note').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (window.showToast) {
+        window.showToast('Loading signed clinical progress note by Dr. Sarah Jenkins...', 'info');
+      }
+    });
+  });
+}
+
+// ============================================================================
+// PATIENT RECOVERY PLAN INTERACTION
+// ============================================================================
+function initPatientRecoveryPlan() {
+  const downloadPlanBtn = document.getElementById('btn-patient-download-plan');
+  if (downloadPlanBtn) {
+    downloadPlanBtn.addEventListener('click', () => {
+      if (window.showToast) {
+        window.showToast('Generating 12-Week Neuro-Motor Recovery Protocol PDF...', 'info');
+      }
+    });
+  }
+
+  // Home Exercise Program (HEP) checkboxes
+  const hepChecks = document.querySelectorAll('.hep-check');
+  const counterEl = document.getElementById('patient-hep-counter');
+
+  function updateHepCounter() {
+    if (!hepChecks.length || !counterEl) return;
+    let done = 0;
+    hepChecks.forEach(cb => {
+      if (cb.checked) done++;
+    });
+    counterEl.textContent = `${done} of ${hepChecks.length} Completed Today`;
+  }
+
+  hepChecks.forEach(cb => {
+    cb.addEventListener('change', () => {
+      updateHepCounter();
+      if (window.showToast) {
+        if (cb.checked) {
+          window.showToast('Great job! Home exercise logged for today.', 'success');
+        } else {
+          window.showToast('Exercise marked uncompleted.', 'info');
+        }
+      }
+    });
+  });
+
+  updateHepCounter();
+}
+
+// ============================================================================
+// PATIENT RESOURCES & EDUCATIONAL MATERIALS
+// ============================================================================
+function initPatientResources() {
+  // Video Demos
+  document.querySelectorAll('.btn-video-trigger').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const card = btn.closest('.video-demo-card') || btn.closest('.exercise-card');
+      const title = card ? (card.querySelector('.video-title, .exercise-name')?.textContent || 'Exercise Video') : 'Exercise Tutorial';
+      if (window.showToast) {
+        window.showToast(`Launching HD Video Demonstration: "${title}"`, 'info');
+      }
+    });
+  });
+
+  // Downloadable guides
+  document.querySelectorAll('.btn-patient-download-doc').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const docName = btn.getAttribute('data-doc') || 'Clinical Guide';
+      if (window.showToast) {
+        window.showToast(`Downloading ${docName} (PDF)...`, 'info');
+      }
+    });
+  });
+
+  // Request Resource
+  const requestResBtn = document.getElementById('btn-patient-request-resource');
+  if (requestResBtn) {
+    requestResBtn.addEventListener('click', () => {
+      const topic = prompt('What topic or video guide would you like your clinical team to provide?');
+      if (topic) {
+        if (window.showToast) {
+          window.showToast(`Resource request for "${topic}" sent to Dr. Sarah Jenkins.`, 'success');
+        }
+      }
+    });
+  }
+}
+
+// ============================================================================
+// PATIENT PROFILE & SUPPORT
+// ============================================================================
+function initPatientSupport() {
+  const msgForm = document.getElementById('form-patient-message');
+  if (msgForm) {
+    msgForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const bodyEl = document.getElementById('patient-msg-body');
+      if (bodyEl) bodyEl.value = '';
+      if (window.showToast) {
+        window.showToast('Secure message delivered to Dr. Sarah Jenkins and clinic desk.', 'success');
+      }
+    });
+  }
+
+  const savePrefsBtn = document.getElementById('btn-patient-save-prefs');
+  if (savePrefsBtn) {
+    savePrefsBtn.addEventListener('click', () => {
+      if (window.showToast) {
+        window.showToast('Communication and alert preferences saved successfully.', 'success');
+      }
+    });
+  }
 }

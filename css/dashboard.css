@@ -1363,6 +1363,344 @@ body.dashboard-body {
     align-items: flex-start;
   }
 
+/* Patient Phase Roadmap */
+.patient-phase-roadmap {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.patient-phase-card {
+  background: rgba(19, 34, 30, 0.65);
+  border: 1px solid var(--dash-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.patient-phase-card:hover {
+  background: var(--dash-surface-hover);
+  border-color: rgba(61, 161, 141, 0.3);
+}
+
+.patient-phase-card.active-phase {
+  border-color: var(--dash-primary);
+  background: rgba(61, 161, 141, 0.08);
+  box-shadow: 0 0 20px -6px rgba(61, 161, 141, 0.25);
+}
+
+.patient-phase-card.completed-phase {
+  border-color: rgba(78, 186, 136, 0.35);
+  background: rgba(78, 186, 136, 0.05);
+}
+
+.phase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.phase-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dash-text-muted);
+}
+
+.phase-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.phase-desc {
+  font-size: 0.825rem;
+  color: var(--dash-text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.phase-points-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--dash-text);
+}
+
+.phase-points-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.phase-points-list li i {
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Home Exercise Prescriptions (HEP) Grid */
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.exercise-card {
+  background: rgba(19, 34, 30, 0.65);
+  border: 1px solid var(--dash-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all var(--transition-fast);
+}
+
+.exercise-card:hover {
+  background: var(--dash-surface-hover);
+  border-color: rgba(61, 161, 141, 0.3);
+}
+
+.exercise-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.exercise-tag {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  background: rgba(61, 161, 141, 0.15);
+  color: var(--dash-primary);
+  font-weight: 600;
+}
+
+.exercise-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0.2rem 0 0 0;
+}
+
+.exercise-meta-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--dash-text-muted);
+}
+
+.exercise-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
+.exercise-card-footer {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--dash-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* Progress Metrics Cards */
+.progress-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.progress-metric-card {
+  background: rgba(19, 34, 30, 0.65);
+  border: 1px solid var(--dash-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: all var(--transition-fast);
+}
+
+.progress-metric-card:hover {
+  background: var(--dash-surface-hover);
+  border-color: rgba(61, 161, 141, 0.3);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  color: var(--dash-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-val-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.metric-current-val {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.metric-baseline-target {
+  font-size: 0.75rem;
+  color: var(--dash-text-dim);
+}
+
+/* Video Resource Cards */
+.video-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.25rem;
+}
+
+.video-demo-card {
+  background: rgba(19, 34, 30, 0.65);
+  border: 1px solid var(--dash-border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-fast);
+}
+
+.video-demo-card:hover {
+  background: var(--dash-surface-hover);
+  border-color: rgba(61, 161, 141, 0.3);
+  transform: translateY(-2px);
+}
+
+.video-thumb-sim {
+  height: 120px;
+  background: linear-gradient(135deg, rgba(61,161,141,0.2) 0%, rgba(213,167,122,0.15) 100%), #0d1a16;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--dash-border-subtle);
+}
+
+.video-play-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(61, 161, 141, 0.9);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  transition: transform var(--transition-fast);
+}
+
+.video-demo-card:hover .video-play-btn {
+  transform: scale(1.12);
+  background: var(--dash-primary);
+}
+
+.video-duration-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #FFFFFF;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.video-card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.video-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.video-therapist {
+  font-size: 0.75rem;
+  color: var(--dash-text-muted);
+}
+
+.video-card-body .btn {
+  margin-top: auto;
+}
+
+/* Extra Mobile Rules */
+@media (max-width: 640px) {
+  .dash-header-action-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dash-header-actions {
+    width: 100%;
+  }
+
+  .dash-header-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dash-search-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dash-search-input-wrap,
+  .dash-filter-select {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .report-item-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .report-item-card .btn {
     width: 100%;
     justify-content: center;
@@ -1372,8 +1710,16 @@ body.dashboard-body {
     grid-template-columns: 1fr;
   }
 
+  .patient-phase-roadmap,
+  .exercise-grid,
+  .progress-metric-grid,
+  .video-demo-grid {
+    grid-template-columns: 1fr;
+  }
+
   .dash-table {
     min-width: 600px;
   }
 }
+
 
